@@ -1,0 +1,9 @@
+{
+    "liveServer.settings.port": 5500,
+    "liveServer.settings.CustomBrowser": "microsoft-edge",
+    "liveServer.settings.fullReload": true,
+    "liveServer.settings.wait": 500,
+    "liveServer.settings.NoCssInject": true
+}
+
+

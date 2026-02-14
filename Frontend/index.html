@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="google" content="notranslate">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="RANGERARBSoft">
+    <meta name="description" content="Desarrollo de Software para Gestión de Negocios, Agricultura e Inmobiliaria">
+    <meta name="keywords" content="AppPROFESIONALES Sianca Valley, AppTABACO, AppGastronomía, AgroQuimicaSolutions">
+    <meta name="copyrigth" content="copyrigth o www.rangerarbsoft.com">
+    <link rel="icon" href="Images\LogoRangerarbsoft_ico.ico">
+    <title>PROFESIONALES - Sianca Valley</title> 
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Bootstrap Select CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/css/bootstrap-select.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Select JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
+    
+</head>
+
+<body class="">
+    <!-----------------------------------   HEADER (CABECERA)  ---------------------------->
+    <header style="background-color:#585252 ;">
+    <div class="header-left">
+        <img src="Images/menu-burguer.svg" class="menu-burguer" title="menu-burguer">
+        <img src="Images/ICONO_PROFESIONALES.png" class="LogoRangerarbsoft" title="logo">
+    </div>
+
+    <div class="header-medium">
+      <input id="buscarSearch" class="input-buscar" type="text" placeholder="Buscar por..." title="buscar">
+      <img id="microphoneIcon" src="Images/microfono-negro.svg" class="icon-microphone" title="microphone">
+      <img id="search" src="Images/lupa.svg" class="search" title="buscar"> 
+    </div>
+
+    <div class="header-right">
+        <div class="notification-container" id="notificaciones-user">
+            <img src="Images/boton-de-notificaciones.svg" class="notificaciones-user" title="notificacion">
+        </div> 
+      <img src="Images/UserThree.svg" class="UserThree" id="showAccount" title="usuario">
+    </div>
+  </header>
+
+  <!-----------------------------------   BOTONES SUPERIORES CARROUSSEL  ---------------------------->
+  <div class="button-container" style="background-color: #fff;">
+      <div class="enlaces-botones-ayuda">
+        <a href="#" id="btn-help-1" class="btn-help-one">Todos</a> 
+        <a href="#" id="btn-help-2" class="btn-help-two">Todos</a>
+        <a href="#" id="btn-help-3" class="btn-help-three">Todos</a>
+        <a href="#" id="btn-help-4" class="btn-help-four">Todos</a>
+        <a href="#" id="btn-help-5" class="btn-help-five">Todos</a>
+        <a href="#" id="btn-help-6" class="btn-help-six">Todos</a>
+        <a href="#" id="btn-help-7" class="btn-help-seven">Todos</a>
+        <a href="#" id="btn-help-8" class="btn-help-eight">Todos</a>
+        <a href="#" id="btn-help-9" class="btn-help-nine">Todos</a>
+      </div>
+    </div>
+
+      <!------------------------------------------   CONTENEDOR CENTRAL   --------------------------------------------->
+    <main id="layoutSidenav_content">
+      <!-- Miniatura 1 -->
+      <section class="miniatures">
+        <img src="Images/ICONO_PROFESIONALES.png" alt="Video 1" class="miniature-img" />
+        <div class="miniature-info">
+          <h6 id="tituloProfessionals" class="title">Professionals</h6>
+          <textarea id="comment-task-user" class="desc-textarea">Aplicación para publicar trabajos, desarrollos o experiencias de Profesionales</textarea>
+        </div>
+        <!-- Contenedor visualizaciones + fecha + likes -->
+        <div class="miniature-footer">
+          <img id="views-users" class="views"><img src="Images/icons8-view.png"></a><label id="count-vistas">0</label>
+          <a id="likes-users" class="likes"><img src="Images/me-gusta.svg"></a><label id="count-likes">0</label>
+          <a id="dislikes-users" class="dislikes"><img src="Images/no-gusta.svg"></a><label id="count-dislikes">0</label>
+          <span id="public-date" class="date-public">02/01/2025</span>
+          <button id="report-post-main" class="report-post" type="button">
+            <img class="alert-report" src="Images/acceso-denegado.png">
+        </button>
+        </div>
+      </section>
+    </main>
+
+    <!------------- Contenedor que se inyectará al hacer clic en 'Denuncias' ----------->
+    
+        <div id="report-denuncias" class="contenedor-report-denuncias" 
+             style="background-color: #c9b6b6; z-index: 3000; padding: 12px">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 id="tituloReportDenuncias" class="m-0 text-center flex-grow-1 fw-bold">Denuncias</h5>
+                <button id="miDenunciasCerrar" class="btn-close" title="CerrarDenuncias"></button>  
+             </div>
+             <h2 id="den-cont-inapr">Denunciar contenido inapropiado</h2>
+            <p id="denuncia-uno">Confiamos en los miembros de la Comunidad de PROFESIONALES Sianca Valley para denunciar el contenido que consideren inapropiado según las Condiciones y Privacidad estipuladas. Este proceso se realiza en forma anónima  para que otros usuarios no puedan tomar conocimiento quién ha denunciado el contenido supuestamente fuera de las Normas. Cuando se denuncia contenido, este no se retira automáticamente, sino que se revisa de acuerdo con el siguiente método: </p><br>
+            <p id="denuncia-dos">El Contenido que infrinja las Condiciones y Privacidad se retirará de PROFESIONALES Sianca Valley.</p>
+            <p id="denuncia-tres">El Contenido que quizás no sea adecuado para el público mas joven se le aplica una restricción de edad.</p>
+            <p id="denuncia-cuatro">El personal de RANGERARBSoft revisa el contenido denunciado las 24 horas del día, los 7 dias de la semana. El contenido se puede denunciar en cualquier momento tras la subida y el equipo de RANGERARBSoft los revisa después. Si el equipo descubre que el contenido no infringe nuestras normas o polícticas, permanecerá en PROFESIONALES Sianca Valley, independientemente de la cantidad de veces que se denuncie. 1.- Inicia sesión en PROFESIONALES Sianca Valley. 2.- Haz click en ... debajo del contenido que quieras denunciar. 3.- En el menú desplegable, elige Denunciar. 4.- Selecciona el motivo que mejor describa la infracción por la que quieres denunciar el contenido. 5.- Indica cualquier detalle que pueda ayudar al equipo de revisión a tomar una decisión, como una descripción de la infracción.</p> 
+            <button id="report-post-denunciar" class="report-post-denunciar">DENUNCIAR</button>
+        </div>
+    
+        <!--------------- Contenedor que se inyectará al hacer clic en 'Historial Denuncias' ------------->
+        <div id="historial-denuncias" class="historial-denuncias">
+            <h3 id="titulo-historial-denuncias"> Historial Denuncias</h3>
+            <button id="miHistoryDenunciasCerrar" class="btn-close" title="CerrarHistoryDenuncias"></button>
+            <table id="tabla-historial-denuncias">
+                <tr>
+                    <th class="encabezado">N°Denuncia</th>
+                    <th class="encabezado">TítuloDenuncia</th>
+                    <th class="encabezado">UserDenunciado</th>
+                    <th class="encabezado">Fecha</th>
+                </tr>    
+            </table>    
+        </div>
+
+      <!-----------------------------------   MENU - LATERAL - IZQUIERDO  ---------------------------->
+    <div class="container">
+      <div class="sidebar d-none" style="background-color: #c9b6b6;">
+        <div class="enlaces-menu">
+          <a href="#" id="casaHome"><img src="Images/casa.svg" class="casa-home" title="casa"><p>Home</p></a>
+          <a href="#" id="camaraVideo"><img src="Images/camara-de-video.svg" class="camara-video" title="publicar"><p>Publicar</p></a>
+          <a href="#" id="miHistory"><img src="Images/history-clock-.svg" class="mi-history" title="historial"><p>Historial</p></a>
+          <a href="#" id="misPublicaciones"><img src="Images/publicaciones.svg" class="mis-publicaciones" title="publicaciones"><p>Mis Publicaciones</p></a>
+          <a href="#" id="misVideos"><img src="Images/play-video.svg" class="mis-videos" title="videos"><p>Mis Videos</p></a>
+          <a href="#" id="misImages"><img src="Images/imagenes.svg" class="mis-images" title="imagenes"><p>Mis Imágenes</p></a>
+          <a href="#" id="misConfigures"><img src="Images/configuraciones.svg" class="mis-configures" title="configuraciones"><p>Configuración</p></a>
+          <a href="#" id="misDenuncias"><img src="Images/denunciar.svg" class="mis-denuncias" title="denuncias"><p>Denuncias</p></a>
+          <a href="#" id="miHistorialDenuncias"><img src="Images/history-clock-.svg" class="miHistorial-denuncias" title="historial-denuncias"><p>Historial Denuncias</p></a>
+          <a href="#" id="helpAyudaWeb"><img src="Images/ayuda-web.svg" class="help-ayuda-web" title="ayudas"><p>Ayuda</p></a>
+          <a href="#" class="social-link linkedin" data-app="linkedin">
+            <img src="Images/linkedin.svg">
+            <p>LinkedIn</p>
+            </a>
+          <a href="#" class="social-link youtube" data-app="youtube">
+            <img src="Images/youtube.svg">
+            <p>YouTube</p>
+            </a>
+          <a href="#" class="social-link facebook" data-app="facebook">
+            <img src="Images/facebook.svg">
+            <p>Facebook</p>
+            </a>
+          <a href="#" class="social-link instagram" data-app="instagram">
+            <img src="Images/instagram.svg">
+            <p>Instagram</p>
+            </a>
+        </div>
+      </div>  
+    </div>
+
+    <!------------------------------   CONTENEDOR NOTIFICACIONES USUARIOS   ------------------------->
+    <div id="container-notify-users" 
+        class="container-notify-users position-absolute flex-column"
+        style="z-index:970; overflow-y:auto; background: #fff; top: 56px; right:0;">
+        <div class="comments-old-users">
+            <h5 id="comentariosCuentaUser" class="m-0 text-center flex-grow-1" style="color:black; margin-top:5px; margin-bottom:5px">Comentarios</h5>
+            <div class="user-comment-container" style="display: flex; align-items: flex-start;">
+                <img src="Images/UserThree.png" class="image-comments-users" title="imagenUsuario">
+                <div class="header-text"> 
+                    <span class="comments-users-name">User-X</span>
+                    <span  id="date-comment" class="periodo-comment">0</span>
+                    <p id="days-comment">Dias</p>
+                 </div>
+            </div>
+            <p class="comment-user">Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+            <div class="user-comment-reaction" style="display: flex; align-items: center;">
+                <a href="#"><img src="Images/me-gusta.svg" title="megusta" class="imageMeGusta"></a>
+                <span class="cantidad-like-comment">0</span>
+                <a href="#"><img src="Images/no-gusta.svg" title="nogusta" class="imageNoGusta"></a>
+                <span class="cantidad-no-like-comment">0</span>
+            </div>
+            <div class="reply-row"></div>
+                <img src="Images/UserThree.png" class="image-reply-users" title="imagenResponderUsuario"> 
+                <span class="reply-user-comment">Responder</span>
+                <input class="insert-reply-comment" placeholder="Agregar un comentario..." title="comentarios" style="margin-left: 5px;">
+            </div>
+        </div>    
+    </div>
+
+     <!------------------------------------   CONTENEDOR MENÚ LATERAL-CUENTAS   ---------------------------------->
+
+    <div id="contenedorCuenta" class="flex-column">
+        <!-- Cabecera -->
+        <div class="d-flex justify-content-between align-items-center border-bottom py-2 px-4" style="background: lightgrey;">
+            <h5 id="tituloCuentaUser" class="m-0 text-center flex-grow-1" style="color:black; margin-top:5px; margin:botton 5px">Cuenta</h5>
+            <button id="cerrarCuenta" class="btn-close" aria-label="Cerrar"></button>
+        </div>
+        <!-- Contenido -->
+        <div class="d-flex flex-column justify-content-evenly align-items-start h-100 p-1 pt-1 gap-1">
+            <div class="d-flex align-items-center w-100" style="cursor:pointer;">
+                <img src="Images/LogoRangerarbsoft_ico.ico" width="24" height="24" class="me-2" alt="icono">
+                <span id="btnCuentaProfessionals">Cuenta de Professionals</span>
+            </div>
+            <div class="d-flex align-items-center w-100" style="cursor:pointer;">
+                <img src="Images/agregar-usuario.svg" width="24" height="24" class="me-2" alt="icono">
+                <a id="btnAñadirCuenta" class="btn btn-link">Añadir cuenta</a>
+            </div>
+            <div class="d-flex align-items-center w-100" style="cursor:pointer;">
+                <img src="Images/cambiar-cuenta.svg" width="24" height="24" class="me-2" alt="icono">
+                <a id="btnCambiarCuenta" class="btn btn-link">Cambiar cuenta</a>
+            </div>
+            <div class="d-flex align-items-center w-100" style="cursor:pointer;">
+                <img src="Images/suscribir.svg" width="24" height="24" class="me-2" alt="icono">
+                <a id="btnSuscripcionCuenta" class="btn btn-link">Suscripción</a>
+            </div>
+            <div class="d-flex align-items-center w-100" style="cursor:pointer;">
+                <img src="Images/dato-user.svg" width="24" height="24" class="me-2" alt="icono">
+                <span id="btnDatosProfessionals">Tus datos en Professionals</span>
+            </div>
+            <div class="d-flex align-items-center w-100" style="cursor:pointer;">
+                <img src="Images/smartphone-32.svg" width="24" height="24" class="me-2" alt="icono">
+                <span id="btnTemaFondoProfessionals">Aspecto tema de la Aplicación</span>
+            </div>
+            <div class="d-flex align-items-center w-100" style="cursor:pointer;">
+                <img src="Images/configuraciones.svg" width="24" height="24" class="me-2" alt="icono">
+                <span id="btnConfigProfessionals">Configuración</span>
+            </div>
+            <div class="d-flex align-items-center w-100" style="cursor:pointer;">
+                <img src="Images/acceso-denegado.svg" width="24" height="24" class="me-2" alt="icono">
+                <span id="btnModoRestringProfessionals">Modo restringido</span>
+            </div>
+            <div class="d-flex align-items-center w-100" style="cursor:pointer;">
+                <img src="Images/enviar-sugerencias.svg" width="24" height="24" class="me-2" alt="icono">
+                <span id="btnenviarSugerenciasProfessionals">Enviar sugerencias</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Aqui comienza la Ventana de Home -->	        
+    <div id="contenedor-Home" class="contenedor position-fixed" 
+        style="background-color: #c9b6b6; z-index: 50; padding: 10px;">
+        <button id="cerrarHome" class="btn-close" aria-label="CerrarHome"></button>
+        <h1 class="titulo-professionals">PROFESSIONALS</h1>
+        <img class="img-inicio-app" src="Images/LogoRangerarbsoft.png" title="imgInicio">
+        <!-- Contenedor en fila -->
+        <div class="row-imagenes">
+            <img class="img-app-rangerarb" src="Images/ICONO_PROFESIONALES.png" title="imgRangerarb">
+            <img class="img-apps-rangerarbsoft" src="Images/RANGERARBSOFTPrincipal.png" title="imgRangerarbbsoft">
+        </div>
+        <p class="descrip-rangerarbsoft">"Desarrollo de Software para Gestión de Negocios, Agricultura e Inmobiliaria"</p>
+        <p class="all-der-reserv">all rigth reserved</p>
+    </div>
+
+    <!------------ Contenedor principal que se inyectará al hacer clic en 'Publicar' -------------->
+    <div id="contenedor-Publicacion" class="contenedor position-fixed" 
+        style="background-color: #c9b6b6; z-index: 60; padding: 10px;">
+        <!-- Cabecera con flecha y X -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+        <button id="publicarCerrar" class="btn-close" aria-label="CerrarPublicar"></button>
+        <h5 id="tituloPublicar" class="m-0 text-center flex-grow-1 fw-bold">Publicar</h5>
+        </div>
+        <div class="row g-3">
+            <!-- Perfil del usuario -->
+            <div class="col-12 d-flex align-items-center">
+            <div class="rounded-circle overflow-hidden border" style="width: 50px; height: 50px;">
+                <img src="https://placehold.co/80x80" alt="Usuario" id="image-users-publicar" class="w-100 h-100 object-fit-cover" />
+            </div>
+            <div class="ms-3">
+                <label id="name-username-publicar" class="d-block text-muted text-break">Nombre y Apellido</label>
+                <label id="email-user-publicar" class="d-block text-muted text-break">usuario@ejemplo.com</label>
+            </div>
+            </div>
+
+            <div class="col-12">
+            <hr class="my-3">
+            </div>
+
+            <div class="col-12 d-flex flex-wrap">
+            <button  id="select-image-publicar" class="btn btn-outline-primary me-2 mb-2">Lista de Imágenes</button>
+            <button id="select-video-publicar" class="btn btn-outline-secondary mb-2">Lista de Videos</button>
+            </div>
+
+            <div class="col-12">
+            <div id="alert-img-video-publicar" class="alert alert-info text-center" role="alert">
+                Aún no has cargado ninguna imagen ni video. Por favor selecciona un archivo para comenzar.
+            </div>
+            </div>
+
+            <div class="col-12 d-md-flex gap-4 align-items-stretch">
+            <div class="flex-fill d-flex flex-column">
+                <div class="border rounded p-2 mb-2 text-center flex-shrink-0" style="aspect-ratio: 16/9; background-color: #f8f9fa;">
+                <img id="container-img-publicar" src="https://placehold.co/320x180" alt="Previsualizar imagen" class="w-100 h-100 object-fit-contain">
+                </div>
+                <button id="btnbuscar-imagen-publicar" class="btn btn-outline-dark w-100 mb-2">Buscar imagen</button>
+                <input id="titulo-img-publicar" type="text" class="form-control mb-2 fw-bold text-break" placeholder="Título de la imagen">
+                <textarea id="txtarea-comment-img-publicar" class="form-control mb-2 text-break" rows="3" placeholder="Comentario breve de 250 carácteres"></textarea>
+                <button id="btn-publicar-img" class="btn btn-primary w-100 mt-auto">Publicar imagen</button>
+            </div>
+
+            <div class="flex-fill d-flex flex-column">
+                <div class="border rounded p-2 mb-2 text-center flex-shrink-0" style="aspect-ratio: 16/9; background-color: #f8f9fa;">
+                  <video id="container-video-publicar" class="w-100 h-100 object-fit-contain" controls>
+                      <source src="" type="video/mp4">
+                      Tu navegador no soporta la reproducción de video.
+                  </video>
+                </div>
+                <button id="btnbuscar-video-publicar" class="btn btn-outline-dark w-100 mb-2">Buscar video</button>
+                <input id="titulo-video-publicar" type="text" class="form-control mb-2 fw-bold text-break" placeholder="Título del video">
+                <textarea id="txtarea-comment-video-publicar" class="form-control mb-2 text-break" rows="3" placeholder="Comentario breve de 250 caráctereso"></textarea>
+                <button id="btn-publicar-video" class="btn btn-primary w-100 mt-auto">Publicar video</button>
+            </div>
+        </div>
+    </div>
+    </div>
+
+     <!-- Contenedor Historial -->
+    <div id="contenedor-Historial" class="contenedor position-fixed">
+        <div class="justify-content-between align-items-center mb-3">
+            <button id="historialCerrar" class="btn-close" aria-label="CerrarHistorial"></button>
+            <h5 id="tituloHistorial" class="m-0 text-center flex-grow-1 fw-bold">Historial</h5>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-12 col-md-6">
+                <section class="mb-4">
+                    <div class="border rounded shadow-sm p-2 d-flex flex-column h-100">
+                        <div class="border mb-2" style="aspect-ratio: 16 / 9; background-color: #f0f0f0;">
+                            <img src="https://placehold.co/320x180" class="w-100 h-100 object-fit-cover" alt="media" />
+                        </div>
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="d-flex flex-column flex-grow-1">
+                                <label class="fw-semibold text-dark small text-break">Descrip. Imagen</label>
+                                <label class="text-muted small text-break">Descip. Personal</label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <section class="mb-4">
+                    <div class="border rounded shadow-sm p-2 d-flex flex-column h-100">
+                        <div class="border mb-2" style="aspect-ratio: 16 / 9; background-color: #f0f0f0;">
+                            <video class="w-100 h-100 object-fit-cover" controls>
+                                <source src="" type="video/mp4">
+                                Tu navegador no soporta la reproducción de video.
+                            </video>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="d-flex flex-column flex-grow-1">
+                                <label class="fw-semibold text-dark small text-break">Descrip. Video</label>
+                                <label class="text-muted small text-break">Descip. Personal</label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+
+    <!--------------- Contenedor que se inyectará al hacer clic en 'Mis Publicaciones' ------------->
+
+    <div id="contenedor-MisPublisher" class="contenedor position-fixed" 
+        style="background-color: #c9b6b6; z-index: 80; padding: 10px">
+    <!-- Cabecera con flecha y X -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 id="tituloMisPublicaciones" class="m-0 text-center flex-grow-1 fw-bold">Mis Publicaciones</h5>
+        <button id="misPublisherCerrar" class="btn-close" title="CerrarMisPublicaciones"></button>
+    </div>
+        <div class="row g-3">
+        <div class="col-12 col-md-6">
+        <!-- Contenedor de imagen -->
+        <section class="mb-4">
+            <div class="border rounded shadow-sm p-2 d-flex flex-column h-100">
+            <div class="border mb-2" style="aspect-ratio: 16 / 9; background-color: #f0f0f0;">
+                <img src="https://placehold.co/320x180" class="w-100 h-100 object-fit-cover" alt="media" />
+            </div>
+            <div class="d-flex justify-content-between align-items-start">
+                <div class="d-flex flex-column flex-grow-1">
+                <label class="fw-semibold text-dark small text-break">Descrip. Image</label>
+                <label class="text-muted small text-break">Descip. Personal</label>
+                </div>
+                <div class="position-relative">
+                <button class="btn btn-link p-0 text-muted" title="btnImagenes" onclick="">  
+                    <i class="bi bi-three-dots-vertical fs-5"></i>
+                </button>
+                <div class="dropdown-menu-custom d-none position-absolute end-0 mt-2 shadow rounded bg-white">
+                    <div class="menu-item"><i class="bi bi-download me-2"></i> Descargar</div>
+                    <div class="menu-item"><i class="bi bi-share me-2"></i> Compartir</div>
+                    <div class="menu-item"><i class="bi bi-slash-circle me-2"></i> No interesa</div>
+                    <div class="menu-item"><i class="bi bi-flag me-2"></i> Denunciar</div>
+                </div>
+                </div>
+            </div>
+            <div class="mt-2 text-muted small">
+                Visualizaciones: 123<br>
+                Me gusta: <span class="border px-2">99</span>
+                <span class="ps-2">No gusta: <span class="border px-2">5</span></span><br>
+                01/01/2025
+            </div>
+            </div>
+        </section>
+        </div>
+
+        <div class="col-12 col-md-6">
+        <!-- Contenedor de video -->
+        <section class="mb-4">
+            <div class="border rounded shadow-sm p-2 d-flex flex-column h-100">
+            <div class="border mb-2" style="aspect-ratio: 16 / 9; background-color: #f0f0f0;">
+                <video class="w-100 h-100 object-fit-cover" controls>
+                <source src="" type="video/mp4">
+                Tu navegador no soporta la reproducción de video.
+                </video>
+            </div>
+            <div class="d-flex justify-content-between align-items-start">
+                <div class="d-flex flex-column flex-grow-1">
+                <label class="fw-semibold text-dark small text-break">Descrip. Video</label>
+                <label class="text-muted small text-break">Descip. Personal</label>
+                </div>
+                <div class="position-relative">
+                <button class="btn btn-link p-0 text-muted" onclick="" title="btnMuted">
+                    <i class="bi bi-three-dots-vertical fs-5"></i>
+                </button>
+                <div class="dropdown-menu-custom d-none position-absolute end-0 mt-2 shadow rounded bg-white">
+                    <div class="menu-item"><i class="bi bi-download me-2"></i> Descargar</div>
+                    <div class="menu-item"><i class="bi bi-share me-2"></i> Compartir</div>
+                    <div class="menu-item"><i class="bi bi-slash-circle me-2"></i> No interesa</div>
+                    <div class="menu-item"><i class="bi bi-flag me-2"></i> Denunciar</div>
+                </div>
+                </div>
+            </div>
+            <div class="mt-2 text-muted small">
+                Visualizaciones: 321<br>
+                Me gusta: <span class="border px-2">88</span>
+                <span class="ps-2">No gusta: <span class="border px-2">3</span></span><br>
+                01/01/2025
+            </div>
+            </div>
+        </section>
+        </div>
+    </div>
+    </div>
+
+    <!--------------- Contenedor que se inyectará al hacer clic en 'Mis Videos' ------------->
+    <div id="contenedor-MisVideos" class="contenedor position-fixed" 
+        style="background-color: #c9b6b6; z-index: 80; padding: 10px">
+    <!-- Cabecera con flecha y X -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 id="tituloMisVideos" class="m-0 text-center flex-grow-1 fw-bold">Mis Videos</h5>
+        <button id="misVideosCerrar" class="btn-close" title="CerrarMisVideos"></button>
+    </div>
+    <div class="row g-3">
+            <div class="col-12 col-md-6">
+                <section class="mb-4">
+                    <div class="border rounded shadow-sm p-2 d-flex flex-column h-100">
+                        <div class="border mb-2" style="aspect-ratio: 16 / 9; background-color: #f0f0f0;">
+                            <video class="w-100 h-100 object-fit-cover" controls>
+                                <source src="" type="video/mp4">
+                                Tu navegador no soporta la reproducción de video.
+                            </video>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="d-flex flex-column flex-grow-1">
+                                <label class="fw-semibold text-dark small text-break">Descrip. Video</label>
+                                <label class="text-muted small text-break">Descip. Personal</label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="containers">
+                <iframe class="contenedor" src=""><img id="normal" src="Images/normal-image.svg"><img id="ampliar" src="Images/normal-image.svg"></iframe>
+                <label class="titulo-imagen">titulo imagen alberto beccari mañalich alberto beccari mañalic</label>
+                <label class="nombre-apellido">Apellido y Nombre</label>
+                <label class="fecha-public">Fecha</label>
+                <label class="visual">32</label><p class="visualizaciones">visualizaciones</p>
+                <ul>
+                   <li><img id="megusta" src="Images/me-gusta.svg"><a href="#" class="me-gusta">4321</a></li>
+                    <li><img id="nogusta" src="Images/no-gusta.svg"><a href="#" class="no-gusta">1234</a></li>    
+                </ul>        
+            </div>        
+    </div>
+    </div>
+
+    <!--------------- Contenedor que se inyectará al hacer clic en 'Mis Imágenes' ------------->
+    <div id="contenedor-MisImagenes" class="contenedor position-fixed" 
+        style="background-color: #c9b6b6; z-index: 80; padding: 10px">
+        <!-- Cabecera con flecha y X -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 id="tituloMisImagenes" class="m-0 text-center flex-grow-1 fw-bold">Mis Imágenes</h5>
+            <button id="misImagenesCerrar" class="btn-close" title="CerrarMisImagenes"></button>
+        </div>
+        <div class="col-12 col-md-6">
+                <section class="mb-4">
+                    <div class="border rounded shadow-sm p-2 d-flex flex-column h-100">
+                        <div class="border mb-2" style="aspect-ratio: 16 / 9; background-color: #f0f0f0;">
+                            <img src="https://placehold.co/320x180" class="w-100 h-100 object-fit-cover" alt="media" />
+                        </div>
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="d-flex flex-column flex-grow-1">
+                                <label class="fw-semibold text-dark small text-break">Descrip. Imagen</label>
+                                <label class="text-muted small text-break">Descip. Personal</label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="containers">
+                <iframe class="contenedor"><img id="image-normal" src="Images/normal-image.svg"><img id="ampliar-image" src="Images/expand-image.svg"></iframe>
+                <label class="titulo-imagen">titulo imagen alberto beccari mañalich alberto beccari mañalic</label>
+                <label class="nombre-apellido">Apellido y Nombre</label>
+                <label class="fecha-public">Fecha</label>
+                <label class="visual">32</label><p class="visualizaciones">visualizaciones</p>
+                <ul>
+                   <li><img id="megusta" src="Images/me-gusta.svg"><a href="#" class="me-gusta">4321</a></li>
+                    <li><img id="nogusta" src="Images/no-gusta.svg"><a href="#" class="no-gusta">1234</a></li>    
+                </ul>        
+            </div> 
+        </div>       
+    </div>
+
+    <!--------------- Contenedor que se inyectará al hacer clic en 'Configuración' ------------->
+    <div id="contenedor-Configuracion" class="contenedor position-fixed" 
+        style="background-color: #c9b6b6; z-index: 100; padding: 10px">
+        <!-- Cabecera con flecha y X -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 id="tituloMiConfiguracion" class="m-0 text-center flex-grow-1 fw-bold">Configuración</h5>
+            <button id="miConfiguracionCerrar" class="btn-close" title="CerrarConfiguracion"></button>
+        </div>
+            <div id="informacion">
+                <a id="info-uno" class="infoUno" href="#">Información Básica</a>
+                <a id="info-dos" class="infoDos" href="#">Configuración Avanzada</a>
+                <a id="info-tres" class="infoTres" href="#">Acceso a Funciones</a>
+                <hr id="hr-uno">
+                <p id="parrafo-pais">Selecciona el país en el que resides actualmente</p>
+                <select id="selec-pais" value="País de residencia">
+                    <option id="pais">Argentina</option>
+                    <option id="pais">Bolivia</option>
+                    <option id="pais">Brasil</option>
+                    <option id="pais">Chile</option>
+                    <option id="pais">Colombia</option>
+                    <option id="pais">Paraguay</option>
+                    <option id="pais">Perú</option>
+                    <option id="pais">Uruguay</option>
+                    <option id="pais">Venezuela</option>
+                </select>
+                
+                <hr id="hr-dos">
+                <p id="parrafo-provincia">Selecciona tu actual</p>
+                <select id="selec-prov" value="Provincia de residencia">
+                    <option id="provinc" >Buenos Aires</option>
+                    <option id="provinc">Catamarca</option>
+                    <option id="provinc">Chaco</option>
+                    <option id="provinc">Chubut</option>
+                    <option id="provinc">Córdoba</option>
+                    <option id="provinc">Corrientes</option>
+                    <option id="provinc">Entre Rios</option>
+                    <option id="provinc">Formosa</option>
+                    <option id="provinc">Jujuy</option>
+                    <option id="provinc">La Pampa</option>
+                    <option id="provinc">La Rioja</option>
+                    <option id="provinc">Mendoza</option>
+                    <option id="provinc">Neuquén</option>
+                    <option id="provinc">Rio Negro</option>
+                    <option id="provinc">Salta</option>
+                    <option id="provinc">San Juan</option>
+                    <option id="provinc">San Luis</option>
+                    <option id="provinc">Santa Cruz</option>
+                    <option id="provinc">Santa Fe</option>
+                    <option id="provinc">Stgo del Estero</option>
+                    <option id="provinc">Tierra del Fuego</option>
+                    <option id="provinc">Tucumán</option>        
+                </select>
+                
+                <hr id="hr-tres">
+                <p class="prim-title-profes">Primer Título Profesional</p>
+                <p class="parr-prim-title">Detalla tu primer título Profesional</p>
+                <input id="prim-title" type="texto" name="" placeholder="Escribe tu primer primer Título">
+                <p class="prim-num-matr">N° Matricula</p>
+                <input id="prim-matricula" type="numero" name="" placeholder="Ingresa Matricula">
+                <hr id="hr-cuatro">
+                <p class="otro-title-profes">Otro Título Profesional</p>
+                <p class="parr-seg-title">Detalla tu otro título Profesional</p>
+                <input id="seg-title" type="texto" name="" placeholder="Escribe tu segundo título">
+                <p id="seg-num-matr">N° Matricula</p>
+                <input id="seg-matricula" type="numero" name="" placeholder="Ingresa Matricula">
+
+                <hr id="hr-cuatro">
+                <h3 id="configure-advanced">Configuración Avanzada</h3>
+            <p id="parrafo-uno-aud" >Simplifica tu flujo de trabajo seleccionando un ajuste de audiencia a nivel de la App. Si no respondes a esta pregunta, tendrás que identificar cada contenido creado para niños que subas a esta App. Este ajuste se aplicará a el contenido que ya haya en la Appy a los que subas en el futuro. Si no configuras un ajuste a nivel de contenido prevalecerá sobre el ajuste a nivel de la App.</p>
+            <p id="marcar-canal">¿Quieres marcar tu canal como creado para Adultos Mayores, Jóvenes o Niños? Selecciona</p>
+                    <select id="selec-audiencia" value="Select-hearing">
+                            <option id="hearing-one">Adultos Mayores</option>
+                            <option id="hearing-two">Jóvenes</option>
+                            <option id="hearing-three">Niños</option>
+                        </select>
+            <input id="check-one" type="checkbox" name="Creado para público Adultos Mayores"><p id="aud-adultos -mayores">Marcar este canal como creado para Adultos Mayores. Nunca subo contenido dirigido a una audiencia infantil.</p>
+            <input id="check-two" type="checkbox" name="Creado para público Jóvenes"><p id="aud-jóvenes">Marcar este canal como creado para Jóvenes. Nunca subo contenido dirigido a una audiencia infantil.</p>
+            <input id="check-three" type="checkbox" name="Creado para público Infantiles"><p id="aud-infantiles">Marcar este canal como creado para niños. Nunca subo contenido dirigido a una audiencia Adultos o Jóvenes</p>
+            <label id="id-usuario">ID de usuario</label><label id="cod-id-user"></label>
+            <label id="id-profesionales">ID Canal</label><label id="id-cod-profes"></label>
+            <label id="eliminar-profes">Eliminar PROFESIONALES<a id="delete-profesionales" href="#">Eliminar canal</a></label>
+	
+            <p id="marcar-canal-uno">Independientemente de tu lugar de residencia, debes cumplir con la ley de protección de la privacidad infantil online de Argentina y otras leyes pertinentes. Tienes la obligación de comunicarnos si tu contenido se crea para niños:</p>
+            <input id="check-uno" type="checkbox" name="Creado para público Adultos Mayores"><p id="aud-infant">Si, marcar este canal como creado para niños. Siempre subo contenido dirigido a una audiencia infantil.</p>
+            <input id="check-dos" type="checkbox" name="Creado para público infantil o menores"><p id="aud-no-infant">Marcar este canal como no creado para niños. Nunca subo contenido dirigido a una audiencia infantil.</p>
+            <hr id="hr-cinco">
+            <label id="id-usuario">ID de usuario</label><label id="cod-id-user"></label>
+            <label id="id-profesionales">ID Canal</label><label id="id-cod-profes"></label>
+            <label id="mover-profes">Mover PROFESIONALES<a id="traslad-profesionales" href="#">Mover PROFESIONALES a otra cuenta</a></label>
+            <label id="id-cod-profes"></label>
+            <label id="eliminar-profes">Eliminar PROFESIONALES<a id="delete-profesionales" href="#">Eliminar canal</a></label>
+
+                <button id="btn-ingr-configure">Ingresar</button>        
+            </div>    
+        </div>
+
+        <!--------------- Contenedor que se inyectará al hacer clic en 'Ayuda' ------------->
+        <div id="contenedor-help" class="contenedor position-fixed" 
+            style="background-color: #c9b6b6; z-index: 130; padding: 10px">
+            <!-- Cabecera con flecha y X -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 id="titulo-help-ayuda" class="m-0 text-center flex-grow-1 fw-bold">Ayuda</h5>
+                <button id="miHelpAyudaCerrar" class="btn-close" title="CerrarHelpAyuda"></button>
+            </div>
+                <a href="#" id="vincularDispositivos"><img src="Images/publicaciones.svg" class="myHelp" title="ayuda"><p>Ver Professionals en todos tus dispositivos</p></a>
+                <a href="#" id="recuperarCanalHackeado"><img src="Images/publicaciones.svg" class="myCanalHackeado" title="canal-hackeado"><p>Recuperar un canal de Professionals hackeado</p></a>
+                <a href="#" id="videosProblems"><img src="Images/publicaciones.svg" class="miAyuda" title="ayuda"><p>Solucionar problemas de imágenes y videos de Professionals</p></a>
+                <a href="#" id="visit-HelpForo"><img src="Images/publicaciones.svg" class="miHelpForo="help-foro"><p>Visitar el Foro de Ayuda de Professionals</p></a>
+                <a href="#" id="sendComments"><img src="Images/publicaciones.svg" class="miSendComments" title="send-comments"><p>Enviar comentarios al Foro de Ayuda</p></a>
+        </div>
+
+        <!--------------- Contenedor que se inyectará al hacer clic en 'Cuentas' ------------->
+         <div id="contenedor-account-personal" class="contenedor position-fixed" 
+            style="background-color: #c9b6b6; z-index: 140; padding: 10px">
+            <!-- Cabecera con flecha y X -->
+            <div class="account-header d-flex justify-content-between align-items-center mb-3">
+                <h5 id="titulo-account-personal" class="m-0 text-center flex-grow-1 fw-bold">Cuenta Personal</h5>
+                <button id="miCuentaPersonalCerrar" class="btn-close" title="CerrarCuentaPersonal"></button>
+            </div>
+
+            <ul class="menu-personal">
+                    <li class="foto-account-pers"><img class="foto-personal" src="Images\account-personal.png"><a href="#"></a></li>
+                    <label class="nom-apell-account">cuenta correo principal</label>
+                    <label class="emailAccountPersonal">cuentacorreoprincipal@email.com</label>
+                    <li class="cuenta-google"><a href="https://myaccount.google.com">Gestionar tus cuentas de Google</a></li>
+                    <br>
+                    <hr class="linea-uno">
+                    <img class="foto-pers-uno" src="Images/UserThree.svg" alt="Foto de persona">
+                    <label class="email-pers-uno">otracuentacorreo@email.com</label>
+                    <li><img class="foto-pers-dos" src="Images/agregar-usuario.svg"><a id="add-account-personal" class="add-account-personal" href="#">Añadir otra cuenta</a></li>
+                    <br>
+                    <hr class="linea-dos">
+                    <li class="indice"><a class="cerrar-sesion" href="#">Cerrar sesión en todas las cuentas</a></li>
+                    <hr class="linea-tres">
+                    <br>
+                    <label class="leer">Leer Condiciones</label>
+                    <li class="privacy"><a class="condiciones" href="#">Condiciones y Privacidad</a></li>
+                    
+            </ul>
+        </div>
+
+        <!--------------- Contenedor que se inyectará al hacer clic en 'Suscripción o Añadir Cuenta' ------------->
+        <div id="container-form-suscrip"class="contenedor position-fixed" 
+            style="background-color: #fff; z-index: 150; padding: 10px">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 id="titulo-registro-reg" class="m-0 text-center flex-grow-1 fw-bold">REGISTRARSE</h5>
+                <button id="miRegisterCerrar" class="btn-close" title="CerrarRegister"></button>
+            </div>
+            <form id="registerForm" class="form-reg">
+                    <input type="text" id="firstName" name="firstName" placeholder="Nombre/s" value="" class="input-48" required>
+                    <input type="text" id="lastName" name="lastName" placeholder="Apellido/s" value="" class="input-48" required>
+                    <input type="text" id="dni" name="dni" placeholder="N° Documento" value="" class="input-8" required>
+                    <input type="text" id="professionalLicense" name="professionalLicense" placeholder="Matrícula Profesional" value="" class="input-8" required>
+                    <input type="text" id="specialty" name="specialty" placeholder="Especialidad" value="" class="input-20" required>
+                    <input type="text" id="university" name="university" placeholder="Universidad Estudios Terminados" value="" class="input-30" required>
+                    <input type="text"id="professionalAssociationRegistration" name="professionalAssociationRegistration" placeholder="Colegio Profesional que otorgó Matrícula" class="input-30" required>
+                    <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Telefono" value="" class="input-10" required>
+                    <input type="email" id="email" name="email" placeholder="email" value="" class="input-108" required>
+                    <input type="password" id="password" name="password" minlength="8" placeholder="Contraseña Única" class="input-48" required>
+                    <input type="submit" id="registrarSuscrip" value="Registrar" value="" class="btn-enviar">                      
+            </form>
+        </div>
+
+        <!--------------- Contenedor que se inyectará al hacer clic en 'Iniciar Sesión' ------------->
+        <div id="container-form-login" class="contenedor position-fixed" 
+            style="background-color: #fff; z-index: 150; padding: 10px">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 id="titulo-inicio-sesion" class="m-0 text-center flex-grow-1 fw-bold">INICIAR SESIÓN</h5>
+                <button id="miLoginCerrar" class="btn-close" title="CerrarLogin"></button>
+            </div>
+            <form class="form-login" onsubmit="">
+                <input type="email" id="emailLogin" name="email" placeholder="email" value="" class="input-108" required>
+                <input type="password" id="passwordLogin" name="password" placeholder="Contraseña" value="" class="input-48" required>
+                <input type="submit" id="iniciarSesion" value="Iniciar Sesión" class="btn-enviar">
+                <input type="button" id="olvidastePass" value="Olvidaste tu contraseña..?" class="btn-enviar">                   
+            </form>
+        </div>
+        
+        <!--------------- Contenedor Recuperar Contraseña (Enviar Código) -------------->
+        <div id="container-form-forgot-password" class="contenedor position-fixed"
+            style="background-color: #fff; z-index: 150; padding: 10px">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="m-0 text-center flex-grow-1 fw-bold">RECUPERAR CONTRASEÑA</h5>
+                <button id="forgotPassCerrar" class="btn-close" title="Cerrar"></button>
+            </div>
+            <form id="forgotPasswordForm" class="form-forgot">
+                <input type="email" id="emailRecovery" name="email" placeholder="Ingresá tu email" class="input-108" required>
+                <input type="submit" value="Enviar código" class="btn-enviar">
+            </form>
+        </div>
+
+        <!--------------- Contenedor Verificar Código y Nueva Contraseña -------------->
+        <div id="container-form-verify-code" class="contenedor position-fixed"
+            style="background-color: #fff; z-index: 150; padding: 10px">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="m-0 text-center flex-grow-1 fw-bold">RESTABLECER CONTRASEÑA</h5>
+                <button id="verifyCodeCerrar" class="btn-close" title="Cerrar"></button>
+            </div>
+
+            <form id="verifyCodeForm" class="form-verify">
+                <input type="text" id="recoveryCode"
+                    name="code" placeholder="Código de 6 dígitos" class="input-20" required>
+                <input type="password" id="newPassword" name="newPassword" minlength="8"
+                    placeholder="Nueva contraseña" class="input-48" required>
+                <input type="submit" value="Restablecer contraseña" class="btn-enviar">
+            </form>
+        </div>
+
+
+        
+
+
+        <!--------------- Contenedor que se inyectará al hacer clic en 'Cambiar Cuentas' ------------->
+         <div id="contenedor-add-account" class="contenedor position-fixed" 
+            style="background-color: #c9b6b6; z-index: 160; padding: 10px">
+            <!-- Cabecera con flecha y X -->
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 id="titulo-add-account" class="m-0 text-center flex-grow-1 fw-bold">Cambiar Cuenta Personal</h5>
+                <button id="miAddCuentaCerrar" class="btn-close" title="CerrarAddCuenta"></button>
+            </div>
+            <ul class="menu-add-personal">
+                    <a class="change-account-pers"><li class="foto-add-account-pers"><div class="fotoimg-add-account"></div></li>
+                    <label class="nom-apell-add-account">cuenta correo principal</label>
+                    <label class="emailAddAccount">cuentacorreoprincipal@email.com</label></a>
+                    <li class="cuenta-google"><a href="https://myaccount.google.com">Gestionar tus cuentas de Google</a></li>
+                    <hr class="linea-one">
+                    <div class="fotoimg-pers-one"></div>
+                    <label class="email-pers-one">otracuentacorreo@email.com</label>
+                    <!-- <li><img class="foto-pers-dos" src="Images/agregar-usuario.svg"></li> -->
+                    <hr class="linea-two">
+                    <div class="fotoimg-pers-two"></div>
+                    <label class="email-pers-two">otracuentacorreo@email.com</label>
+                    <hr class="linea-three">
+                    <li class="indice"><a class="cerrar-sesion" href="#">Cerrar sesión en todas las cuentas</a></li>
+                    <hr class="linea-four">
+                    <br>
+                    <label class="leer">Leer Condiciones</label>
+                    <li class="privacy"><a class="condiciones" href="#">Condiciones y Privacidad</a></li>       
+            </ul>
+        </div>
+        
+        
+
+
+        
+
+
+        <!----------------------------------------------   FIN MAQUETADO   --------------------------------------------------->
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+        
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script> -->
+       
+        <script src="src/index.js"></script>
+    </body>
+
+</html>
