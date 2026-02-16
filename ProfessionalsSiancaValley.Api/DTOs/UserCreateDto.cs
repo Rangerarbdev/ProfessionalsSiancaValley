@@ -13,16 +13,21 @@ namespace ProfessionalsSiancaValley.Api.DTOs
         [Required]
         public string Dni { get; set; } = string.Empty;
 
+        [Required]
         public string? ProfessionalLicense { get; set; }
 
+        [Required]
         public string? Specialty { get; set; } = string.Empty;
 
+        [Required]
         public string? University { get; set; } = string.Empty;
 
-        public string? ProfessionalAssociationRegistration { get; set; } = string.Empty;
-
+        [Required]
+        public string? ProfessionalAssociationRegistration { get;
+            set; } = string.Empty;
+        [Required]
         public string? PhoneNumber { get; set; } = string.Empty;
-
+     
         [Required]
         public string Email { get; set; } = string.Empty;
 
