@@ -14,7 +14,10 @@ namespace ProfessionalsSiancaValley.Api.DTOs
         public string Dni { get; set; } = string.Empty;
 
         [Required]
-        public string? ProfessionalLicense { get; set; }
+        public DateTime FechaNacimiento { get; set; }
+
+        [Required]
+        public string? ProfessionalLicense { get; set; } = string.Empty;
 
         [Required]
         public string? Specialty { get; set; } = string.Empty;
@@ -23,8 +26,7 @@ namespace ProfessionalsSiancaValley.Api.DTOs
         public string? University { get; set; } = string.Empty;
 
         [Required]
-        public string? ProfessionalAssociationRegistration { get;
-            set; } = string.Empty;
+        public string? ProfessionalAssociationRegistration { get;set; } = string.Empty;
         [Required]
         public string? PhoneNumber { get; set; } = string.Empty;
      

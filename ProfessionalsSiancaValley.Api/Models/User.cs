@@ -44,6 +44,15 @@ namespace ProfessionalsSiancaValley.Api.Models
         [MaxLength(20)]
         public string Dni { get; set; } = string.Empty;
 
+        [Required]
+        [Column("fecha_nacimiento")]
+        public DateTime FechaNacimiento { get; set; }
+
+        [Required]
+        [Column("estado_edad")]
+        public bool EstadoEdad { get; set; }
+
+
         [Column("professional_license")]
         [MaxLength(50)]
         public string? ProfessionalLicense { get; set; }
