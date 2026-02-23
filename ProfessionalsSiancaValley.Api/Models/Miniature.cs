@@ -6,34 +6,21 @@ namespace ProfessionalsSiancaValley.Api.Models
     {
         public int Id_Miniature { get; set; }
 
-        [Required]
         public int Id_Publicacion { get; set; }
 
-        [Required]
-        public required string Id_User { get; set; }
+        public string Id_User { get; set; } = null!;
 
-        [Required]
-        [MaxLength(150)]
-        public required string Nombre_Usuario { get; set; }
+        public string Nombre_Usuario { get; set; } = null!;
 
-        [Required]
-        [MaxLength(150)]
-        public required string Email_Usuario { get; set; }
+        public string Email_Usuario { get; set; } = null!;
 
-        [Required]
-        [MaxLength(10)]
-        public required string Tipo_Contenido { get; set; }
+        public string Tipo_Contenido { get; set; } = null!;
 
-        [Required]
-        public required string Url_Miniatura { get; set; }
+        public string Url_Miniatura { get; set; } = null!;
 
-        [Required]
-        [MaxLength(150)]
-        public required string Titulo { get; set; }
+        public string Titulo { get; set; } = null!;
 
-        [Required] // 👈 AQUÍ obligas la descripción
-        [MaxLength(250)]
-        public required string Descripcion { get; set; }
+        public string Descripcion { get; set; } = null!;
 
         public DateTime Fecha_Publicacion { get; set; } = DateTime.UtcNow;
 
