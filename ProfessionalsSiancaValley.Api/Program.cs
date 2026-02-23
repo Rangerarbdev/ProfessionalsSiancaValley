@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProfessionalsSiancaValley.Api.Data;
 using Npgsql;
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
