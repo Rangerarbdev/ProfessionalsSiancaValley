@@ -41,7 +41,7 @@ namespace ProfessionalsSiancaValley.Api.Data
         // OVERRIDE SAVECHANGES (AUTOMÁTICO)
         // ===================================================
         public override async Task<int> SaveChangesAsync(
-    CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default)
         {
             var nuevosUsuarios = ChangeTracker.Entries<User>()
                 .Where(e => e.State == EntityState.Added)
@@ -103,6 +103,17 @@ namespace ProfessionalsSiancaValley.Api.Data
             }
 
             return await base.SaveChangesAsync(cancellationToken);
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Report>()
+                .HasOne(r => r.Miniature)
+                .WithMany()
+                .HasForeignKey(r => r.Id_Miniature)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
