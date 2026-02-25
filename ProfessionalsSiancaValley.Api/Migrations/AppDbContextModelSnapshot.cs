@@ -17,10 +17,117 @@ namespace ProfessionalsSiancaValley.Api.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.0")
+                .HasAnnotation("ProductVersion", "8.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("ProfessionalsSiancaValley.Api.Models.Miniature", b =>
+                {
+                    b.Property<int>("Id_Miniature")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id_Miniature"));
+
+                    b.Property<bool>("Bloqueado_Por_Sistema")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Dislikes")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Email_Usuario")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<bool>("Es_Contenido_Sensible")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Estado_Revision")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Fecha_Publicacion")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Id_Publicacion")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Id_User")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Likes")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Nombre_Usuario")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Tipo_Contenido")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Titulo")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Url_Miniatura")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Vistas")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id_Miniature");
+
+                    b.ToTable("Miniatures");
+                });
+
+            modelBuilder.Entity("ProfessionalsSiancaValley.Api.Models.Report", b =>
+                {
+                    b.Property<int>("Id_Report")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id_Report"));
+
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Email_Usuario")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Fecha_Reporte")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<int>("Id_Miniature")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Id_User")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Nombre_Usuario")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Titulo")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id_Report");
+
+                    b.HasIndex("Id_Miniature");
+
+                    b.ToTable("Reports");
+                });
 
             modelBuilder.Entity("ProfessionalsSiancaValley.Api.Models.User", b =>
                 {
@@ -44,6 +151,14 @@ namespace ProfessionalsSiancaValley.Api.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("character varying(150)")
                         .HasColumnName("email");
+
+                    b.Property<bool>("EstadoEdad")
+                        .HasColumnType("boolean")
+                        .HasColumnName("estado_edad");
+
+                    b.Property<DateTime>("FechaNacimiento")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("fecha_nacimiento");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -105,6 +220,17 @@ namespace ProfessionalsSiancaValley.Api.Migrations
                     b.HasKey("IdUser");
 
                     b.ToTable("users");
+                });
+
+            modelBuilder.Entity("ProfessionalsSiancaValley.Api.Models.Report", b =>
+                {
+                    b.HasOne("ProfessionalsSiancaValley.Api.Models.Miniature", "Miniature")
+                        .WithMany()
+                        .HasForeignKey("Id_Miniature")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Miniature");
                 });
 #pragma warning restore 612, 618
         }

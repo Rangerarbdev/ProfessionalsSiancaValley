@@ -4,6 +4,7 @@ namespace ProfessionalsSiancaValley.Api.Models
 {
     public class Miniature
     {
+        [Key]
         public int Id_Miniature { get; set; }
 
         public int Id_Publicacion { get; set; }
@@ -32,5 +33,7 @@ namespace ProfessionalsSiancaValley.Api.Models
         public bool Bloqueado_Por_Sistema { get; set; } = false;
 
         public string Estado_Revision { get; set; } = "pendiente";
+
+        public int TotalReportes { get; set; }
     }
 }
