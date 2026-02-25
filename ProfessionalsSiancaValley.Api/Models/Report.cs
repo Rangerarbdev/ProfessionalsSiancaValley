@@ -4,6 +4,7 @@ namespace ProfessionalsSiancaValley.Api.Models
 {
     public class Report
     {
+        [Key]
         public int Id_Report { get; set; }
 
         // Foreign Key
