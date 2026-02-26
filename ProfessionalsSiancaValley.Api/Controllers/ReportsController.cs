@@ -2,6 +2,8 @@
 using ProfessionalsSiancaValley.Api.Data;
 using ProfessionalsSiancaValley.Api.DTOs;
 using ProfessionalsSiancaValley.Api.Models;
+using ProfessionalsSiancaValley.Api.Helpers;
+using Microsoft.EntityFrameworkCore;
 
 namespace ProfessionalsSiancaValley.Api.Controllers
 {
@@ -35,6 +37,21 @@ namespace ProfessionalsSiancaValley.Api.Controllers
             _context.Reports.Add(report);
             await _context.SaveChangesAsync();
 
+            var miniature = await _context.Miniatures
+    .       FirstOrDefaultAsync(m => m.Id_Miniature == report.Id_Miniature);
+
+            if (miniature != null)
+            {
+                miniature.TotalReportes++;
+
+                if (miniature.TotalReportes >= ModerationSettings.LIMITE_REPORTES)
+                {
+                    miniature.Bloqueado_Por_Sistema = true;
+                    miniature.Estado_Revision = "Bloqueado Automaticamente";
+                }
+
+                await _context.SaveChangesAsync();
+            }
             return Ok(report);
         }
     }
