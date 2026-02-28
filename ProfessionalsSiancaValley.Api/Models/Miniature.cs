@@ -35,5 +35,7 @@ namespace ProfessionalsSiancaValley.Api.Models
         public string Estado_Revision { get; set; } = "pendiente";
 
         public int TotalReportes { get; set; }
+
+        public ICollection<Report> Reports { get; set; } = new List<Report>();
     }
 }
