@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProfessionalsSiancaValley.Api.Data;
 using ProfessionalsSiancaValley.Api.Models;
 
 namespace ProfessionalsSiancaValley.Api.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [ApiController]
     [Route("api/admin/moderation")]
     public class AdminModerationController : ControllerBase

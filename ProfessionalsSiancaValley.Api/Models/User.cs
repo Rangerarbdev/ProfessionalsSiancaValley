@@ -91,6 +91,11 @@ namespace ProfessionalsSiancaValley.Api.Models
         [Column("is_active")]
         public bool IsActive { get; set; } = true;
 
+        [Required]
+        [Column("role")]
+        [MaxLength(30)]
+        public string Role { get; set; } = "User";
+
         [JsonIgnore]
         [Column("created_at")]
         public DateTime CreatedAt { get; set; }

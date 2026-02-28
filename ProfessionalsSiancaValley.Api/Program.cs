@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ProfessionalsSiancaValley.Api.Data;
-using Npgsql;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Npgsql;
+using ProfessionalsSiancaValley.Api.Data;
+using System.Security.Claims;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,9 +27,17 @@ builder.Services.AddSwaggerGen();
 // ================= JWT =================
 var jwt = builder.Configuration.GetSection("Jwt");
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+builder.Services
+    .AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
     .AddJwtBearer(options =>
     {
+        options.RequireHttpsMetadata = true;
+        options.SaveToken = true;
+
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
@@ -39,15 +48,22 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidIssuer = jwt["Issuer"],
             ValidAudience = jwt["Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(jwt["Key"]!))
+                Encoding.UTF8.GetBytes(jwt["Key"]!)),
+
+            RoleClaimType = ClaimTypes.Role // 👈 CLAVE PARA ROLES
         };
     });
 
-//builder.Services.AddAuthorization();
+// ================= AUTHORIZATION =================
 builder.Services.AddAuthorization(options =>
 {
+    // Política existente
     options.AddPolicy("MayorDeEdad", policy =>
         policy.RequireClaim("estadoEdad", "True"));
+
+    // Política Admin (opcional pero profesional)
+    options.AddPolicy("SoloAdmin", policy =>
+        policy.RequireRole("Admin"));
 });
 
 
