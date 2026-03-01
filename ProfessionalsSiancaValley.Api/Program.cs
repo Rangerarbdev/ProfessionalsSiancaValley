@@ -85,13 +85,23 @@ builder.Services
 // ================= AUTHORIZATION =================
 builder.Services.AddAuthorization(options =>
 {
-    // Política existente
+    // ================= CLAIMS =================
     options.AddPolicy("MayorDeEdad", policy =>
         policy.RequireClaim("estadoEdad", "True"));
 
-    // Política Admin (opcional pero profesional)
+    // ================= ROLES BASE =================
     options.AddPolicy("SoloAdmin", policy =>
         policy.RequireRole("Admin"));
+
+    // ================= POLÍTICAS FUNCIONALES =================
+    options.AddPolicy("PuedeModerarMiniaturas", policy =>
+        policy.RequireRole("Admin"));
+
+    options.AddPolicy("PuedePublicarMiniaturas", policy =>
+        policy.RequireRole("Admin", "Editor"));
+
+    options.AddPolicy("AccesoProfesionales", policy =>
+        policy.RequireRole("Admin", "Profesional"));
 });
 
 
