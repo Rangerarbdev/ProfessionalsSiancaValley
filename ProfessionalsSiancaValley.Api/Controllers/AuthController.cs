@@ -29,9 +29,8 @@ namespace ProfessionalsSiancaValley.Api.Controllers
         [HttpPost("login")]
         public IActionResult Login(LoginDto dto)
         {
-            var user = _context.Users.FirstOrDefault(u =>
-                u.Email == dto.Email &&
-                u.IdUser == dto.IdUser);
+            var user = _context.Users
+    .       FirstOrDefault(u => u.Email == dto.Email);
 
             if (user == null)
                 return Unauthorized("Usuario no encontrado");
@@ -107,7 +106,7 @@ namespace ProfessionalsSiancaValley.Api.Controllers
                 LastName = model.LastName,
                 Dni = model.Dni,
 
-                FechaNacimiento = model.FechaNacimiento,
+                FechaNacimiento = DateTime.SpecifyKind(model.FechaNacimiento, DateTimeKind.Utc),
                 EstadoEdad = true,
 
                 ProfessionalLicense = model.ProfessionalLicense,
@@ -117,6 +116,7 @@ namespace ProfessionalsSiancaValley.Api.Controllers
                 PhoneNumber = model.PhoneNumber,
 
                 Email = model.Email.ToLower(),
+                Role = "User",
                 IsActive = true,
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
@@ -157,11 +157,12 @@ namespace ProfessionalsSiancaValley.Api.Controllers
 
             var claims = new[]
             {
-                new Claim(ClaimTypes.NameIdentifier, user.IdUser),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim("edad", edad.ToString()),
-                new Claim("estadoEdad", user.EstadoEdad.ToString())
-            };
+        new Claim(ClaimTypes.NameIdentifier, user.IdUser),
+        new Claim(ClaimTypes.Email, user.Email),
+        new Claim(ClaimTypes.Role, user.Role), // 👈 ESTA ES LA CLAVE
+        new Claim("edad", edad.ToString()),
+        new Claim("estadoEdad", user.EstadoEdad.ToString())
+    };
 
             var token = new JwtSecurityToken(
                 issuer: jwt["Issuer"],
