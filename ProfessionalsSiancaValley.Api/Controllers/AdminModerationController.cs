@@ -18,6 +18,7 @@ namespace ProfessionalsSiancaValley.Api.Controllers
             _context = context;
         }
 
+        [Authorize(Policy = "PuedeModerarMiniaturas")]
         [HttpGet("miniatures-pendientes")]
         public async Task<IActionResult> GetPendientes()
         {
