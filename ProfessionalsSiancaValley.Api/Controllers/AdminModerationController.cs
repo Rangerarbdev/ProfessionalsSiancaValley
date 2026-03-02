@@ -3,10 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProfessionalsSiancaValley.Api.Data;
 using ProfessionalsSiancaValley.Api.Models;
+using System.Security.Claims;
 
 namespace ProfessionalsSiancaValley.Api.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
+    //[ApiController]
+
+    [Authorize]
     [ApiController]
     [Route("api/admin/moderation")]
     public class AdminModerationController : ControllerBase
@@ -22,6 +26,10 @@ namespace ProfessionalsSiancaValley.Api.Controllers
         [HttpGet("miniatures-pendientes")]
         public async Task<IActionResult> GetPendientes()
         {
+            var role = User.FindFirst(ClaimTypes.Role)?.Value;
+
+            return Ok($"ROL DETECTADO: {role}");
+
             var pendientes = await _context.Miniatures
                 .Where(m => m.Bloqueado_Por_Sistema)
                 .Include(m => m.Reports)
