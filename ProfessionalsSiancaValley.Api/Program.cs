@@ -10,11 +10,11 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 // ================= DATABASE =================
-builder.Services.AddSingleton<NpgsqlConnection>(sp =>
-{
-    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    return new NpgsqlConnection(connectionString);
-});
+//builder.Services.AddSingleton<NpgsqlConnection>(sp =>
+//{
+//var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+//return new NpgsqlConnection(connectionString);
+//});
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(
