@@ -37,5 +37,7 @@ namespace ProfessionalsSiancaValley.Api.Models
         public int TotalReportes { get; set; }
 
         public ICollection<Report> Reports { get; set; } = new List<Report>();
+
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }
