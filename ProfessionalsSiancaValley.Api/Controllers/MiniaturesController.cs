@@ -17,10 +17,10 @@ namespace ProfessionalsSiancaValley.Api.Controllers
             _context = context;
         }
 
-        // ===============================
+        // ==========================================
         // CREAR MINIATURA
         // POST api/miniatures
-        // ===============================
+        // ==========================================
         [HttpPost]
         public async Task<IActionResult> Create(CreateMiniatureDto dto)
         {
@@ -67,6 +67,10 @@ namespace ProfessionalsSiancaValley.Api.Controllers
             });
         }
 
+        // ==========================================
+        // OBTENER TODAS LAS MINIATURAS
+        // GET api/miniatures
+        // ==========================================
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -75,6 +79,43 @@ namespace ProfessionalsSiancaValley.Api.Controllers
                 .ToListAsync();
 
             return Ok(miniatures);
+        }
+
+        // ==========================================
+        // OBTENER MINIATURAS POR USUARIO
+        // GET api/miniatures/user/{id}
+        // ==========================================
+        [HttpGet("user/{id}")]
+        public async Task<IActionResult> GetByUser(string id)
+        {
+            var miniatures = await _context.Miniatures
+                .Where(m => m.Id_User == id)
+                .OrderByDescending(m => m.CreatedAt)
+                .ToListAsync();
+
+            return Ok(miniatures);
+        }
+
+        // ==========================================
+        // ELIMINAR MINIATURA
+        // DELETE api/miniatures/{id}
+        // ==========================================
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var miniature = await _context.Miniatures.FindAsync(id);
+
+            if (miniature == null)
+                return NotFound("Miniatura no encontrada.");
+
+            _context.Miniatures.Remove(miniature);
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new
+            {
+                message = "Miniatura eliminada correctamente"
+            });
         }
     }
 }
