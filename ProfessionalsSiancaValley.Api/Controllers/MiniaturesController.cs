@@ -66,5 +66,15 @@ namespace ProfessionalsSiancaValley.Api.Controllers
                 miniature
             });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            var miniatures = await _context.Miniatures
+                .OrderByDescending(m => m.CreatedAt)
+                .ToListAsync();
+
+            return Ok(miniatures);
+        }
     }
 }
