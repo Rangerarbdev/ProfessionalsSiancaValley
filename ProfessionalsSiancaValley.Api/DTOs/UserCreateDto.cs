@@ -16,6 +16,8 @@ namespace ProfessionalsSiancaValley.Api.DTOs
         [Required]
         public DateTime FechaNacimiento { get; set; }
 
+        public bool EstadoEdad { get; set; }
+
         [Required]
         public string? ProfessionalLicense { get; set; } = string.Empty;
 
@@ -35,6 +37,7 @@ namespace ProfessionalsSiancaValley.Api.DTOs
 
         [Required]
         public string Password { get; set; } = string.Empty;
+
     }
 }
 
