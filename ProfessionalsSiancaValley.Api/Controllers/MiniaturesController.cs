@@ -60,7 +60,7 @@ namespace ProfessionalsSiancaValley.Api.Controllers
 
             await _context.SaveChangesAsync();
 
-            return Ok(new
+            return Created("", new
             {
                 message = "Miniatura creada correctamente",
                 miniature
