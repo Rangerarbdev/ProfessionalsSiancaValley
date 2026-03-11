@@ -13,6 +13,7 @@ namespace ProfessionalsSiancaValley.Api.Data
         public DbSet<User> Users => Set<User>();
         public DbSet<Miniature> Miniatures => Set<Miniature>();
         public DbSet<Report> Reports => Set<Report>();
+        public DbSet<PasswordRecovery> PasswordRecovery => Set<PasswordRecovery>();
 
         // ===================================================
         // GENERADOR AUTOMÁTICO DEL ID_USER
