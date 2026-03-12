@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ProfessionalsSiancaValley.Api.Data;
 using ProfessionalsSiancaValley.Api.Models;
 using ProfessionalsSiancaValley.Api.DTOs;
+using System.Security.Cryptography;
 
 namespace ProfessionalsSiancaValley.Api.Controllers
 {
@@ -30,7 +31,11 @@ namespace ProfessionalsSiancaValley.Api.Controllers
             if (await _context.Users.AnyAsync(u => u.Email == dto.Email))
                 return BadRequest("El email ya está registrado");
 
-            var edad = DateTime.Today.Year - dto.FechaNacimiento.Year;
+            var hoy = DateTime.Today;
+            var edad = hoy.Year - dto.FechaNacimiento.Year;
+
+            if (dto.FechaNacimiento.Date > hoy.AddYears(-edad))
+                edad--;
             var user = new User
             {
                 FirstName = dto.FirstName,
@@ -60,7 +65,7 @@ namespace ProfessionalsSiancaValley.Api.Controllers
                 Email = user.Email
             };
 
-            return Ok(response);
+            return Created("", response);
         }
 
         // =============================
@@ -105,7 +110,7 @@ namespace ProfessionalsSiancaValley.Api.Controllers
             if (user == null)
                 return BadRequest("Email no registrado");
 
-            var code = new Random().Next(100000, 999999).ToString();
+            var code = RandomNumberGenerator.GetInt32(100000, 999999).ToString();
 
             var recovery = new PasswordRecovery
             {
@@ -120,8 +125,7 @@ namespace ProfessionalsSiancaValley.Api.Controllers
             // aquí luego se enviará email
             return Ok(new
             {
-                message = "Código generado",
-                code = code
+                message = "Código de recuperación enviado al email"
             });
         }
 
