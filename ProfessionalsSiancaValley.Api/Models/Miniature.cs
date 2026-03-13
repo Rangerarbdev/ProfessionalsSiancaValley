@@ -11,6 +11,8 @@ namespace ProfessionalsSiancaValley.Api.Models
 
         public string Id_User { get; set; } = null!;
 
+        public int UserPosition { get; set; }
+
         public string Nombre_Usuario { get; set; } = null!;
 
         public string Email_Usuario { get; set; } = null!;
