@@ -5,6 +5,10 @@ using ProfessionalsSiancaValley.Api.Data;
 using ProfessionalsSiancaValley.Api.Models;
 using ProfessionalsSiancaValley.Api.DTOs;
 using System.Security.Cryptography;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace ProfessionalsSiancaValley.Api.Controllers
 {
@@ -14,11 +18,44 @@ namespace ProfessionalsSiancaValley.Api.Controllers
     {
         private readonly AppDbContext _context;
         private readonly PasswordHasher<User> _hasher;
+        private readonly IConfiguration _configuration;
 
-        public UsersController(AppDbContext context)
+        public UsersController(AppDbContext context, IConfiguration configuration)
         {
             _context = context;
+            _configuration = configuration;
             _hasher = new PasswordHasher<User>();
+        }
+
+        private string GenerateJwtToken(User user)
+        {
+            var jwt = _configuration.GetSection("Jwt");
+
+            var key = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(jwt["Key"]!));
+
+            var creds = new SigningCredentials(
+                key,
+                SecurityAlgorithms.HmacSha256);
+
+            var claims = new[]
+            {
+                new Claim("IdUser", user.IdUser),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Name, user.FirstName),
+                new Claim(ClaimTypes.Role, user.Role ?? "User")
+            };
+
+            var token = new JwtSecurityToken(
+                issuer: jwt["Issuer"],
+                audience: jwt["Audience"],
+                claims: claims,
+                expires: DateTime.UtcNow.AddMinutes(
+                    Convert.ToDouble(jwt["DurationInMinutes"] ?? "120")),
+                signingCredentials: creds
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
         // =============================
@@ -86,14 +123,20 @@ namespace ProfessionalsSiancaValley.Api.Controllers
             if (result == PasswordVerificationResult.Failed)
                 return Unauthorized("Contraseña incorrecta");
 
+            var token = GenerateJwtToken(user);
+
             return Ok(new
             {
                 message = "Login correcto",
-                user.IdUser,
-                user.FirstName,
-                user.LastName,
-                user.Email,
-                user.Role
+                token = token,
+                user = new
+                {
+                    user.IdUser,
+                    user.FirstName,
+                    user.LastName,
+                    user.Email,
+                    user.Role
+                }
             });
         }
 
