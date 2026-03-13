@@ -26,8 +26,10 @@ namespace ProfessionalsSiancaValley.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateMiniatureDto dto)
         {
-            if (string.IsNullOrWhiteSpace(dto.Id_User))
-                return BadRequest("Id_User es obligatorio.");
+            var idUser = User.FindFirst("IdUser")?.Value;
+
+            if (idUser == null)
+                return Unauthorized("Token inválido.");
 
             if (string.IsNullOrWhiteSpace(dto.Titulo))
                 return BadRequest("El título es obligatorio.");
@@ -38,19 +40,19 @@ namespace ProfessionalsSiancaValley.Api.Controllers
             if (string.IsNullOrWhiteSpace(dto.Url_Miniatura))
                 return BadRequest("La URL de la miniatura es obligatoria.");
 
-            // Verificar que el usuario exista
-            var userExists = await _context.Users
-                .AnyAsync(u => u.IdUser == dto.Id_User);
+            // Obtener usuario desde DB
+            var user = await _context.Users
+                .FirstOrDefaultAsync(u => u.IdUser == idUser);
 
-            if (!userExists)
+            if (user == null)
                 return BadRequest("El usuario no existe.");
 
             var miniature = new Miniature
             {
                 Id_Publicacion = dto.Id_Publicacion,
-                Id_User = dto.Id_User,
-                Nombre_Usuario = dto.Nombre_Usuario,
-                Email_Usuario = dto.Email_Usuario,
+                Id_User = user.IdUser,
+                Nombre_Usuario = $"{user.FirstName} {user.LastName}",
+                Email_Usuario = user.Email,
                 Tipo_Contenido = dto.Tipo_Contenido,
                 Url_Miniatura = dto.Url_Miniatura,
                 Titulo = dto.Titulo,
