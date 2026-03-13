@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProfessionalsSiancaValley.Api.Data;
 using ProfessionalsSiancaValley.Api.DTOs;
@@ -21,6 +22,7 @@ namespace ProfessionalsSiancaValley.Api.Controllers
         // CREAR MINIATURA
         // POST api/miniatures
         // ==========================================
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create(CreateMiniatureDto dto)
         {
