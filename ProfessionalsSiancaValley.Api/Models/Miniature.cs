@@ -7,7 +7,7 @@ namespace ProfessionalsSiancaValley.Api.Models
         [Key]
         public int Id_Miniature { get; set; }
 
-        public int Id_Publicacion { get; set; }
+        public string Id_Publicacion { get; set; } = string.Empty;
 
         public string Id_User { get; set; } = null!;
 

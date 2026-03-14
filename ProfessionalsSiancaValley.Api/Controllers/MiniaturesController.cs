@@ -40,6 +40,9 @@ namespace ProfessionalsSiancaValley.Api.Controllers
             if (string.IsNullOrWhiteSpace(dto.Url_Miniatura))
                 return BadRequest("La URL de la miniatura es obligatoria.");
 
+            if (string.IsNullOrWhiteSpace(dto.Id_Publicacion))
+                return BadRequest("Id_Publicacion es obligatorio.");
+
             // Obtener usuario desde DB
             var user = await _context.Users
                 .FirstOrDefaultAsync(u => u.IdUser == idUser);
@@ -51,6 +54,7 @@ namespace ProfessionalsSiancaValley.Api.Controllers
             {
                 Id_Publicacion = dto.Id_Publicacion,
                 Id_User = user.IdUser,
+                UserPosition = user.UserPosition,
                 Nombre_Usuario = $"{user.FirstName} {user.LastName}",
                 Email_Usuario = user.Email,
                 Tipo_Contenido = dto.Tipo_Contenido,

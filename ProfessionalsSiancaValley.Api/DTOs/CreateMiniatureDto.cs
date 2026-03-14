@@ -2,7 +2,7 @@
 {
     public class CreateMiniatureDto
     {
-        public string? Id_Publicacion { get; set; }
+        public string? Id_Publicacion { get; set; } = string.Empty;
 
         public string Tipo_Contenido { get; set; } = string.Empty;
 
