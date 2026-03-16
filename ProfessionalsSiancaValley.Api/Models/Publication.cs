@@ -2,22 +2,20 @@
 
 namespace ProfessionalsSiancaValley.Api.Models
 {
-    using System.ComponentModel.DataAnnotations;
-
     public class Publication
     {
         [Key]
-        public string Id_Publicacion { get; set; }
+        public string Id_Publicacion { get; set; } = string.Empty;
 
-        public string Id_User { get; set; }
+        public string Id_User { get; set; } = string.Empty;
 
         public int UserPosition { get; set; }
 
-        public string Tipo_Contenido { get; set; }
+        public string Tipo_Contenido { get; set; } = string.Empty;
 
-        public string Titulo { get; set; }
+        public string Titulo { get; set; } = string.Empty;
 
-        public string Descripcion { get; set; }
+        public string Descripcion { get; set; } = string.Empty;
 
         public DateTime CreatedAt { get; set; }
 
