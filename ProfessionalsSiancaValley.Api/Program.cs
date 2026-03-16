@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Npgsql;
 using ProfessionalsSiancaValley.Api.Data;
+using ProfessionalsSiancaValley.Api.Services;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -78,6 +79,8 @@ builder.Services
             RoleClaimType = ClaimTypes.Role // 👈 CLAVE PARA ROLES
         };
     });
+
+builder.Services.AddScoped<PublicationService>();
 
 builder.Services.AddAuthorization();
 
