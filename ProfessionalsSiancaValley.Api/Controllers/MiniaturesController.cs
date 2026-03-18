@@ -133,26 +133,31 @@ namespace ProfessionalsSiancaValley.Api.Controllers
         [HttpGet("feed")]
         public async Task<IActionResult> GetFeed()
         {
-            var data = await _context.Publications
-                .Join(_context.MediaFiles,
-                      p => p.Id_Publicacion,
-                      m => m.Id_Publicacion,
-                      (p, m) => new
-                      {
-                          p.Id_Publicacion,
-                          p.Titulo,
-                          p.Descripcion,
-                          p.CreatedAt,
-                          p.Vistas,
-                          p.Likes,
-                          p.Dislikes,
-                          m.UrlArchivo,
-                          m.Tipo_Contenido
-                      })
+            var feed = await _context.Publications
+                .Select(p => new
+                {
+                    p.Id_Publicacion,
+                    p.Id_User,
+                    p.UserPosition,
+                    p.Titulo,
+                    p.Descripcion,
+                    p.CreatedAt,
+                    p.Vistas,
+                    p.Likes,
+                    p.Dislikes,
+                    Media = _context.MediaFiles
+                        .Where(m => m.Id_Publicacion == p.Id_Publicacion)
+                        .OrderBy(m => m.Id_Media)
+                        .Select(m => new
+                        {
+                            m.UrlArchivo,
+                            m.UrlMiniatura,
+                            m.Tipo_Contenido
+                        })
+                        .FirstOrDefault()
+                })
                 .OrderByDescending(x => x.CreatedAt)
                 .ToListAsync();
-
-            return Ok(data);
+            return Ok(feed);
         }
     }
-}
