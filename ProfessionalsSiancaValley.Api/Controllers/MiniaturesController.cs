@@ -125,5 +125,34 @@ namespace ProfessionalsSiancaValley.Api.Controllers
                 message = "Miniatura eliminada correctamente"
             });
         }
+
+        // ==========================================
+        // FEED PRINCIPAL (Publicaciones + Media)
+        // GET api/miniatures/feed
+        // ==========================================
+        [HttpGet("feed")]
+        public async Task<IActionResult> GetFeed()
+        {
+            var data = await _context.Publications
+                .Join(_context.MediaFiles,
+                      p => p.Id_Publicacion,
+                      m => m.Id_Publicacion,
+                      (p, m) => new
+                      {
+                          p.Id_Publicacion,
+                          p.Titulo,
+                          p.Descripcion,
+                          p.CreatedAt,
+                          p.Vistas,
+                          p.Likes,
+                          p.Dislikes,
+                          m.UrlArchivo,
+                          m.Tipo_Contenido
+                      })
+                .OrderByDescending(x => x.CreatedAt)
+                .ToListAsync();
+
+            return Ok(data);
+        }
     }
 }

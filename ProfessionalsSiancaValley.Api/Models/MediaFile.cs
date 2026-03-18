@@ -16,5 +16,7 @@ namespace ProfessionalsSiancaValley.Api.Models
         public string UrlMiniatura { get; set; } = string.Empty;
 
         public DateTime CreatedAt { get; set; }
+
+        public string Tipo_Contenido { get; set; } = string.Empty;
     }
 }
