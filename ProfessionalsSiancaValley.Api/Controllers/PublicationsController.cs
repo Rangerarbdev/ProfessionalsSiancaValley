@@ -116,6 +116,34 @@ namespace ProfessionalsSiancaValley.Api.Controllers
         }
 
         // ==========================================
+        // LIKES Y DISLIKES
+        // ==========================================
+
+        [HttpPost("like/{id}")]
+        public async Task<IActionResult> Like(string id)
+        {
+            var pub = await _context.Publications.FirstOrDefaultAsync(p => p.Id_Publicacion == id);
+            if (pub == null) return NotFound();
+
+            pub.Likes++;
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpPost("dislike/{id}")]
+        public async Task<IActionResult> Dislike(string id)
+        {
+            var pub = await _context.Publications.FirstOrDefaultAsync(p => p.Id_Publicacion == id);
+            if (pub == null) return NotFound();
+
+            pub.Dislikes++;
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        // ==========================================
         // ELIMINAR
         // ==========================================
         [Authorize]
