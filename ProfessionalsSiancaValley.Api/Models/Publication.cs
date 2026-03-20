@@ -28,5 +28,7 @@ namespace ProfessionalsSiancaValley.Api.Models
         public int Dislikes { get; set; } = 0;
 
         public int TotalReportes { get; set; } = 0;
+
+        public bool Bloqueado_Por_Sistema { get; set; } = false;
     }
 }
