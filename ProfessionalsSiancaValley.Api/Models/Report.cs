@@ -24,5 +24,6 @@ namespace ProfessionalsSiancaValley.Api.Models
 
         // Navegación
         public Miniature Miniature { get; set; } = null!;
+        public string Id_Publicacion { get; internal set; }
     }
 }
