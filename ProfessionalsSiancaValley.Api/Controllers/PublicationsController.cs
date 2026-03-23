@@ -134,13 +134,29 @@ namespace ProfessionalsSiancaValley.Api.Controllers
         [HttpPost("dislike/{id}")]
         public async Task<IActionResult> Dislike(string id)
         {
-            var pub = await _context.Publications.FirstOrDefaultAsync(p => p.Id_Publicacion == id);
-            if (pub == null) return NotFound();
+            var pub = await _context.Publications
+                .FirstOrDefaultAsync(p => p.Id_Publicacion == id);
 
+            if (pub == null)
+                return NotFound();
+
+            // 👎 Incrementar dislike
             pub.Dislikes++;
+
+            // 🚨 BLOQUEO AUTOMÁTICO
+            if (pub.Dislikes >= 20 || pub.TotalReportes >= 5)
+            {
+                pub.Bloqueado_Por_Sistema = true;
+            }
+
             await _context.SaveChangesAsync();
 
-            return Ok();
+            return Ok(new
+            {
+                message = "Dislike registrado",
+                pub.Dislikes,
+                pub.Bloqueado_Por_Sistema
+            });
         }
 
         // ==========================================
