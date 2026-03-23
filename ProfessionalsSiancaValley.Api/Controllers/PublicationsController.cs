@@ -157,7 +157,13 @@ namespace ProfessionalsSiancaValley.Api.Controllers
                     CreatedAt = DateTime.UtcNow
                 });
 
+                //-- cambiar dislike a like
+                reaction.Tipo = "LIKE";
+                pub.Dislikes--;
                 pub.Likes++;
+
+                pub.Likes = Math.Max(0, pub.Likes);
+                pub.Dislikes = Math.Max(0, pub.Dislikes);
             }
 
             await _context.SaveChangesAsync();
@@ -211,7 +217,13 @@ namespace ProfessionalsSiancaValley.Api.Controllers
                     CreatedAt = DateTime.UtcNow
                 });
 
+                //--cambiar like a dislike
+                reaction.Tipo = "DISLIKE";
+                pub.Likes--;
                 pub.Dislikes++;
+
+                pub.Likes = Math.Max(0, pub.Likes);
+                pub.Dislikes = Math.Max(0, pub.Dislikes);
             }
 
             // 🚨 BLOQUEO AUTOMÁTICO (TU LÓGICA)
