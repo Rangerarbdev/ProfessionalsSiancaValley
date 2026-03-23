@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 using ProfessionalsSiancaValley.Api.Data;
 using ProfessionalsSiancaValley.Api.DTOs;
-using ProfessionalsSiancaValley.Api.Models;
 using ProfessionalsSiancaValley.Api.Helpers;
-using Microsoft.EntityFrameworkCore;
+using ProfessionalsSiancaValley.Api.Models;
 
 namespace ProfessionalsSiancaValley.Api.Controllers
 {
@@ -53,6 +54,34 @@ namespace ProfessionalsSiancaValley.Api.Controllers
                 await _context.SaveChangesAsync();
             }
             return Ok(report);
+        }
+
+        [HttpPost("{idPublicacion}")]
+        public async Task<IActionResult> Report(string idPublicacion)
+        {
+            var pub = await _context.Publications
+                .FirstOrDefaultAsync(p => p.Id_Publicacion == idPublicacion);
+
+            if (pub == null)
+                return NotFound();
+
+            // 🔥 Incrementar reportes
+            pub.TotalReportes++;
+
+            // 🚨 BLOQUEO AUTOMÁTICO
+            if (pub.Dislikes >= 20 || pub.TotalReportes >= 5)
+            {
+                pub.Bloqueado_Por_Sistema = true;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new
+            {
+                message = "Reporte registrado",
+                pub.TotalReportes,
+                pub.Bloqueado_Por_Sistema
+            });
         }
     }
 }
