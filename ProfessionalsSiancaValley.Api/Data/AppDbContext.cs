@@ -16,6 +16,7 @@ namespace ProfessionalsSiancaValley.Api.Data
         public DbSet<PasswordRecovery> PasswordRecovery => Set<PasswordRecovery>();
         public DbSet<Publication> Publications { get; set; }
         public DbSet<MediaFile> MediaFiles { get; set; }
+        public DbSet<Reaction> Reactions { get; set; }
 
         // ===================================================
         // GENERADOR AUTOMÁTICO DEL ID_USER
