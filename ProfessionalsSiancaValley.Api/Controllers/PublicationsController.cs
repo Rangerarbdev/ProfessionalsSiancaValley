@@ -116,6 +116,28 @@ namespace ProfessionalsSiancaValley.Api.Controllers
         }
 
         // ==========================================
+        // VIEWS
+        // ==========================================
+        [HttpPost("view/{id}")]
+        public async Task<IActionResult> AddView(string id)
+        {
+            var pub = await _context.Publications
+                .FirstOrDefaultAsync(p => p.Id_Publicacion == id);
+
+            if (pub == null)
+                return NotFound();
+
+            pub.Vistas++;
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new
+            {
+                pub.Vistas
+            });
+        }
+
+        // ==========================================
         // LIKES
         // ==========================================
 
