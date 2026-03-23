@@ -116,34 +116,105 @@ namespace ProfessionalsSiancaValley.Api.Controllers
         }
 
         // ==========================================
-        // LIKES Y DISLIKES
+        // LIKES
         // ==========================================
 
+        [Authorize]
         [HttpPost("like/{id}")]
         public async Task<IActionResult> Like(string id)
         {
-            var pub = await _context.Publications.FirstOrDefaultAsync(p => p.Id_Publicacion == id);
-            if (pub == null) return NotFound();
+            var idUser = User.FindFirst("IdUser")?.Value;
 
-            pub.Likes++;
-            await _context.SaveChangesAsync();
+            if (idUser == null)
+                return Unauthorized();
 
-            return Ok();
-        }
-
-        [HttpPost("dislike/{id}")]
-        public async Task<IActionResult> Dislike(string id)
-        {
             var pub = await _context.Publications
                 .FirstOrDefaultAsync(p => p.Id_Publicacion == id);
 
             if (pub == null)
                 return NotFound();
 
-            // 👎 Incrementar dislike
-            pub.Dislikes++;
+            var reaction = await _context.Reactions
+                .FirstOrDefaultAsync(r => r.Id_Publicacion == id && r.Id_User == idUser);
 
-            // 🚨 BLOQUEO AUTOMÁTICO
+            if (reaction != null)
+            {
+                if (reaction.Tipo == "LIKE")
+                    return Ok(new { message = "Ya diste like" });
+
+                // cambiar DISLIKE → LIKE
+                reaction.Tipo = "LIKE";
+                pub.Dislikes--;
+                pub.Likes++;
+            }
+            else
+            {
+                _context.Reactions.Add(new Reaction
+                {
+                    Id_Publicacion = id,
+                    Id_User = idUser,
+                    Tipo = "LIKE",
+                    CreatedAt = DateTime.UtcNow
+                });
+
+                pub.Likes++;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return Ok(new
+            {
+                message = "Like registrado",
+                pub.Likes
+            });
+        }
+
+        // ==========================================
+        // DISLIKES
+        // ==========================================
+
+        [Authorize]
+        [HttpPost("dislike/{id}")]
+        public async Task<IActionResult> Dislike(string id)
+        {
+            var idUser = User.FindFirst("IdUser")?.Value;
+
+            if (idUser == null)
+                return Unauthorized();
+
+            var pub = await _context.Publications
+                .FirstOrDefaultAsync(p => p.Id_Publicacion == id);
+
+            if (pub == null)
+                return NotFound();
+
+            var reaction = await _context.Reactions
+                .FirstOrDefaultAsync(r => r.Id_Publicacion == id && r.Id_User == idUser);
+
+            if (reaction != null)
+            {
+                if (reaction.Tipo == "DISLIKE")
+                    return Ok(new { message = "Ya diste dislike" });
+
+                // cambiar LIKE → DISLIKE
+                reaction.Tipo = "DISLIKE";
+                pub.Likes--;
+                pub.Dislikes++;
+            }
+            else
+            {
+                _context.Reactions.Add(new Reaction
+                {
+                    Id_Publicacion = id,
+                    Id_User = idUser,
+                    Tipo = "DISLIKE",
+                    CreatedAt = DateTime.UtcNow
+                });
+
+                pub.Dislikes++;
+            }
+
+            // 🚨 BLOQUEO AUTOMÁTICO (TU LÓGICA)
             if (pub.Dislikes >= 20 || pub.TotalReportes >= 5)
             {
                 pub.Bloqueado_Por_Sistema = true;
