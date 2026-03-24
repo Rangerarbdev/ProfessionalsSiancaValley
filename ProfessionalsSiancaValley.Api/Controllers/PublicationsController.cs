@@ -145,9 +145,9 @@ namespace ProfessionalsSiancaValley.Api.Controllers
         [HttpPost("like/{id}")]
         public async Task<IActionResult> Like(string id)
         {
-            var idUser = User.FindFirst("IdUser")?.Value;
+            var userId = User.FindFirst("IdUser")?.Value;
 
-            if (idUser == null)
+            if (userId == null)
                 return Unauthorized();
 
             var pub = await _context.Publications
@@ -157,44 +157,37 @@ namespace ProfessionalsSiancaValley.Api.Controllers
                 return NotFound();
 
             var reaction = await _context.Reactions
-                .FirstOrDefaultAsync(r => r.Id_Publicacion == id && r.Id_User == idUser);
+                .FirstOrDefaultAsync(r => r.Id_Publicacion == id && r.Id_User == userId);
 
-            if (reaction != null)
+            if (reaction == null)
             {
-                if (reaction.Tipo == "LIKE")
-                    return Ok(new { message = "Ya diste like" });
-
-                // cambiar DISLIKE → LIKE
-                reaction.Tipo = "LIKE";
-                pub.Dislikes--;
-                pub.Likes++;
-            }
-            else
-            {
+                // 👍 nuevo like
                 _context.Reactions.Add(new Reaction
                 {
                     Id_Publicacion = id,
-                    Id_User = idUser,
-                    Tipo = "LIKE",
-                    CreatedAt = DateTime.UtcNow
+                    Id_User = userId,
+                    Tipo = "like"
                 });
 
-                //-- cambiar dislike a like
-                reaction.Tipo = "LIKE";
+                pub.Likes++;
+            }
+            else if (reaction.Tipo == "like")
+            {
+                // ❌ quitar like
+                _context.Reactions.Remove(reaction);
+                pub.Likes--;
+            }
+            else
+            {
+                // 🔄 cambiar dislike → like
+                reaction.Tipo = "like";
                 pub.Dislikes--;
                 pub.Likes++;
-
-                pub.Likes = Math.Max(0, pub.Likes);
-                pub.Dislikes = Math.Max(0, pub.Dislikes);
             }
 
             await _context.SaveChangesAsync();
 
-            return Ok(new
-            {
-                message = "Like registrado",
-                pub.Likes
-            });
+            return Ok(new { pub.Likes, pub.Dislikes });
         }
 
         // ==========================================
