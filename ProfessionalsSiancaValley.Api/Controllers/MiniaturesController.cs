@@ -133,6 +133,8 @@ namespace ProfessionalsSiancaValley.Api.Controllers
         [HttpGet("feed")]
         public async Task<IActionResult> GetFeed()
         {
+            var userId = User.FindFirst("IdUser")?.Value;
+
             var feed = await _context.Publications
                 .Select(p => new
                 {
@@ -145,6 +147,7 @@ namespace ProfessionalsSiancaValley.Api.Controllers
                     p.Vistas,
                     p.Likes,
                     p.Dislikes,
+
                     Media = _context.MediaFiles
                         .Where(m => m.Id_Publicacion == p.Id_Publicacion)
                         .OrderBy(m => m.Id_Media)
@@ -154,10 +157,17 @@ namespace ProfessionalsSiancaValley.Api.Controllers
                             m.UrlMiniatura,
                             m.Tipo_Contenido
                         })
+                        .FirstOrDefault(),
+
+                    // 🔥 ESTA ES LA CLAVE
+                    UserReaction = _context.Reactions
+                        .Where(r => r.Id_Publicacion == p.Id_Publicacion && r.Id_User == userId)
+                        .Select(r => r.Tipo)
                         .FirstOrDefault()
                 })
                 .OrderByDescending(x => x.CreatedAt)
                 .ToListAsync();
+
             return Ok(feed);
         }
     }
