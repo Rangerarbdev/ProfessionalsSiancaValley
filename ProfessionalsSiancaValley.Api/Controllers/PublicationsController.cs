@@ -161,7 +161,7 @@ namespace ProfessionalsSiancaValley.Api.Controllers
 
             if (reaction == null)
             {
-                // 👍 nuevo like
+                //  Nuevo like
                 _context.Reactions.Add(new Reaction
                 {
                     Id_Publicacion = id,
@@ -173,13 +173,13 @@ namespace ProfessionalsSiancaValley.Api.Controllers
             }
             else if (reaction.Tipo == "like")
             {
-                // ❌ quitar like
+                //  Quitar like
                 _context.Reactions.Remove(reaction);
                 pub.Likes--;
             }
             else
             {
-                // 🔄 cambiar dislike → like
+                //  Cambiar dislike → like
                 reaction.Tipo = "like";
                 pub.Dislikes--;
                 pub.Likes++;
