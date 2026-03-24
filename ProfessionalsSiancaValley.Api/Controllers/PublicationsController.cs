@@ -198,9 +198,9 @@ namespace ProfessionalsSiancaValley.Api.Controllers
         [HttpPost("dislike/{id}")]
         public async Task<IActionResult> Dislike(string id)
         {
-            var idUser = User.FindFirst("IdUser")?.Value;
+            var userId = User.FindFirst("IdUser")?.Value;
 
-            if (idUser == null)
+            if (userId == null)
                 return Unauthorized();
 
             var pub = await _context.Publications
@@ -210,38 +210,32 @@ namespace ProfessionalsSiancaValley.Api.Controllers
                 return NotFound();
 
             var reaction = await _context.Reactions
-                .FirstOrDefaultAsync(r => r.Id_Publicacion == id && r.Id_User == idUser);
+                .FirstOrDefaultAsync(r => r.Id_Publicacion == id && r.Id_User == userId);
 
-            if (reaction != null)
-            {
-                if (reaction.Tipo == "DISLIKE")
-                    return Ok(new { message = "Ya diste dislike" });
-
-                // cambiar LIKE → DISLIKE
-                reaction.Tipo = "DISLIKE";
-                pub.Likes--;
-                pub.Dislikes++;
-            }
-            else
+            if (reaction == null)
             {
                 _context.Reactions.Add(new Reaction
                 {
                     Id_Publicacion = id,
-                    Id_User = idUser,
-                    Tipo = "DISLIKE",
-                    CreatedAt = DateTime.UtcNow
+                    Id_User = userId,
+                    Tipo = "dislike"
                 });
 
-                //--cambiar like a dislike
-                reaction.Tipo = "DISLIKE";
+                pub.Dislikes++;
+            }
+            else if (reaction.Tipo == "dislike")
+            {
+                _context.Reactions.Remove(reaction);
+                pub.Dislikes--;
+            }
+            else
+            {
+                reaction.Tipo = "dislike";
                 pub.Likes--;
                 pub.Dislikes++;
-
-                pub.Likes = Math.Max(0, pub.Likes);
-                pub.Dislikes = Math.Max(0, pub.Dislikes);
             }
 
-            // 🚨 BLOQUEO AUTOMÁTICO (TU LÓGICA)
+            // 🚨 BLOQUEO AUTOMÁTICO
             if (pub.Dislikes >= 20 || pub.TotalReportes >= 5)
             {
                 pub.Bloqueado_Por_Sistema = true;
@@ -249,12 +243,7 @@ namespace ProfessionalsSiancaValley.Api.Controllers
 
             await _context.SaveChangesAsync();
 
-            return Ok(new
-            {
-                message = "Dislike registrado",
-                pub.Dislikes,
-                pub.Bloqueado_Por_Sistema
-            });
+            return Ok(new { pub.Likes, pub.Dislikes, pub.Bloqueado_Por_Sistema });
         }
 
         // ==========================================
