@@ -170,5 +170,46 @@ namespace ProfessionalsSiancaValley.Api.Controllers
 
             return Ok(feed);
         }
+
+        // ==========================================
+        // BUSCADOR TIPO YOUTUBE
+        // GET api/miniatures/search?q=texto
+        // ==========================================
+        [HttpGet("search")]
+        public async Task<IActionResult> Search(string q)
+        {
+            if (string.IsNullOrWhiteSpace(q))
+                return Ok(new List<object>());
+
+            q = q.ToLower();
+
+            var result = await _context.Miniatures
+                .Where(m =>
+                    m.Nombre_Usuario.ToLower().Contains(q) ||
+                    m.Tipo_Contenido.ToLower().Contains(q) ||
+                    m.Titulo.ToLower().Contains(q) ||
+                    m.Descripcion.ToLower().Contains(q) ||
+                    m.Fecha_Publicacion.ToString().Contains(q)
+                )
+                .OrderByDescending(m => m.Fecha_Publicacion)
+                .Select(m => new
+                {
+                    m.Id_Publicacion,
+                    m.Id_User,
+                    m.UserPosition,
+                    m.Nombre_Usuario,
+                    m.Tipo_Contenido,
+                    m.Url_Miniatura,
+                    m.Titulo,
+                    m.Descripcion,
+                    m.Fecha_Publicacion,
+                    m.Vistas,
+                    m.Likes,
+                    m.Dislikes
+                })
+                .ToListAsync();
+
+            return Ok(result);
+        }
     }
 }
