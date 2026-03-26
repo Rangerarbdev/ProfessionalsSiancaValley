@@ -160,7 +160,7 @@ namespace ProfessionalsSiancaValley.Api.Controllers
                         })
                         .FirstOrDefault(),
 
-                    // 🔥 ESTA ES LA CLAVE
+                    // ESTA ES LA CLAVE
                     UserReaction = _context.Reactions
                         .Where(r => r.Id_Publicacion == p.Id_Publicacion && r.Id_User == userId)
                         .Select(r => r.Tipo)
@@ -184,30 +184,38 @@ namespace ProfessionalsSiancaValley.Api.Controllers
 
             q = q.ToLower();
 
-            var result = await _context.Miniatures
-                .Where(m =>
-                    m.Nombre_Usuario.ToLower().Contains(q) ||
-                    m.Tipo_Contenido.ToLower().Contains(q) ||
-                    m.Titulo.ToLower().Contains(q) ||
-                    m.Descripcion.ToLower().Contains(q) ||
-                    m.Fecha_Publicacion.ToString().Contains(q)
+            var result = await _context.Publications
+                .Where(p => !p.Bloqueado_Por_Sistema) // FILTRO CLAVE
+                .Where(p =>
+                    p.Nombre_Usuario.ToLower().Contains(q) ||
+                    p.Titulo.ToLower().Contains(q) ||
+                    p.Descripcion.ToLower().Contains(q) ||
+                    p.Tipo_Contenido.ToLower().Contains(q) ||
+                    p.CreatedAt.ToString().Contains(q)
                 )
-                .OrderByDescending(m => m.Fecha_Publicacion)
-                .Select(m => new
+                .Select(p => new
                 {
-                    m.Id_Publicacion,
-                    m.Id_User,
-                    m.UserPosition,
-                    m.Nombre_Usuario,
-                    m.Tipo_Contenido,
-                    m.Url_Miniatura,
-                    m.Titulo,
-                    m.Descripcion,
-                    m.Fecha_Publicacion,
-                    m.Vistas,
-                    m.Likes,
-                    m.Dislikes
+                    p.Id_Publicacion,
+                    p.Id_User,
+                    p.UserPosition,
+                    p.Titulo,
+                    p.Descripcion,
+                    p.CreatedAt,
+                    p.Vistas,
+                    p.Likes,
+                    p.Dislikes,
+
+                    Media = _context.MediaFiles
+                        .Where(m => m.Id_Publicacion == p.Id_Publicacion)
+                        .Select(m => new
+                        {
+                            m.UrlArchivo,
+                            m.UrlMiniatura,
+                            m.Tipo_Contenido
+                        })
+                        .FirstOrDefault()
                 })
+                .OrderByDescending(x => x.CreatedAt)
                 .ToListAsync();
 
             return Ok(result);
