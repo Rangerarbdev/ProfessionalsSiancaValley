@@ -17,6 +17,8 @@ namespace ProfessionalsSiancaValley.Api.Models
 
         public string Descripcion { get; set; } = string.Empty;
 
+        public string Nombre_Usuario { get; set; } = string.Empty;
+
         public DateTime CreatedAt { get; set; }
 
         public string Estado { get; set; } = "ACTIVO";
