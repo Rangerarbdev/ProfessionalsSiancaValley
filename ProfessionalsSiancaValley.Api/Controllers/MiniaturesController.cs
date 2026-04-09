@@ -136,7 +136,7 @@ namespace ProfessionalsSiancaValley.Api.Controllers
             var userId = User.FindFirst("IdUser")?.Value;
 
             var feed = await _context.Publications
-                .Where(p => !p.Bloqueado_Por_Sistema)
+                //.Where(p => !p.Bloqueado_Por_Sistema)
                 .Select(p => new
                 {
                     p.Id_Publicacion,
