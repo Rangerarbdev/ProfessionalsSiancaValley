@@ -4,7 +4,7 @@ namespace ProfessionalsSiancaValley.Api.DTOs
 {
     public class UploadMediaDto
     {
-        public string Id_Publicacion { get; set; }
-        public IFormFile Archivo { get; set; }
+        public string Id_Publicacion { get; set; } = string.Empty;
+        public required IFormFile Archivo { get; set; }
     }
 }
