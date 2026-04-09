@@ -108,6 +108,18 @@ builder.Services.AddAuthorization(options =>
         policy.RequireRole("Admin", "Profesional"));
 });
 
+// ================= AGREGAR CORS =================
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
 
 var app = builder.Build();
 
@@ -118,9 +130,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("AllowAll");
+
 app.UseHttpsRedirection();
 
-app.UseAuthentication();   // 👈 IMPORTANTE
+app.UseAuthentication();   // <-- IMPORTANTE
 app.UseAuthorization();
 
 app.MapControllers();
