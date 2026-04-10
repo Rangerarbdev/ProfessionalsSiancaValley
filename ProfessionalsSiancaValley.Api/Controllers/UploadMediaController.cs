@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using ProfessionalsSiancaValley.Api.Data;
 using ProfessionalsSiancaValley.Api.Models;
 
@@ -24,11 +25,33 @@ namespace ProfessionalsSiancaValley.Api.Controllers
             [FromForm] string Id_Publicacion,
             [FromForm] IFormFile archivo)
         {
+            // ✅ Validar archivo
             if (archivo == null || archivo.Length == 0)
                 return BadRequest("Archivo inválido");
 
+            // ✅ Validar ID publicación
             if (string.IsNullOrEmpty(Id_Publicacion))
                 return BadRequest("Id_Publicacion requerido");
+
+            // ✅ Validar extensión
+            var extension = Path.GetExtension(archivo.FileName).ToLower();
+
+            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".mp4", ".webm", ".ogg" };
+
+            if (!allowedExtensions.Contains(extension))
+                return BadRequest("Tipo de archivo no permitido");
+
+            // ✅ Validar tamaño (máx 10MB)
+            var maxSize = 10 * 1024 * 1024;
+            if (archivo.Length > maxSize)
+                return BadRequest("El archivo supera el tamaño permitido (10MB)");
+
+            // ✅ Validar que exista la publicación
+            var exists = await _context.Publications
+                .AnyAsync(p => p.Id_Publicacion == Id_Publicacion);
+
+            if (!exists)
+                return NotFound("La publicación no existe");
 
             // 📁 Carpeta uploads
             var uploadsPath = Path.Combine(_env.WebRootPath, "uploads");
@@ -37,7 +60,6 @@ namespace ProfessionalsSiancaValley.Api.Controllers
                 Directory.CreateDirectory(uploadsPath);
 
             // 🔥 Nombre único
-            var extension = Path.GetExtension(archivo.FileName).ToLower();
             var fileName = $"{Guid.NewGuid()}{extension}";
             var filePath = Path.Combine(uploadsPath, fileName);
 
@@ -55,18 +77,15 @@ namespace ProfessionalsSiancaValley.Api.Controllers
                 _ => "unknown"
             };
 
-            // 🧠 Miniatura automática (básico por ahora)
-            string urlMiniatura;
+            // 🌐 Base URL (para frontend)
+            var baseUrl = $"{Request.Scheme}://{Request.Host}";
 
-            if (tipoContenido == "image")
-            {
-                urlMiniatura = $"/uploads/{fileName}";
-            }
-            else
-            {
-                // 🔥 Video → usar imagen placeholder (luego mejoramos)
-                urlMiniatura = "/uploads/video-default.png";
-            }
+            var urlArchivo = $"{baseUrl}/uploads/{fileName}";
+
+            // 🧠 Miniatura
+            string urlMiniatura = tipoContenido == "image"
+                ? urlArchivo
+                : $"{baseUrl}/uploads/video-default.png";
 
             // 💾 Guardar en DB
             var media = new MediaFile
@@ -74,7 +93,7 @@ namespace ProfessionalsSiancaValley.Api.Controllers
                 Id_Publicacion = Id_Publicacion,
                 TipoArchivo = extension,
                 Tipo_Contenido = tipoContenido,
-                UrlArchivo = $"/uploads/{fileName}",
+                UrlArchivo = urlArchivo,
                 UrlMiniatura = urlMiniatura,
                 CreatedAt = DateTime.UtcNow
             };
@@ -82,12 +101,13 @@ namespace ProfessionalsSiancaValley.Api.Controllers
             _context.MediaFiles.Add(media);
             await _context.SaveChangesAsync();
 
+            // ✅ Respuesta limpia
             return Ok(new
             {
                 message = "Archivo subido correctamente",
-                media.UrlArchivo,
-                media.UrlMiniatura,
-                media.Tipo_Contenido
+                urlArchivo,
+                urlMiniatura,
+                tipoContenido
             });
         }
     }
