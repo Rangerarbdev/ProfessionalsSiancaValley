@@ -26,15 +26,15 @@ namespace ProfessionalsSiancaValley.Api.Controllers
             [FromForm] string Id_Publicacion,
             [FromForm] IFormFile archivo)
         {
-            // ✅ Validar archivo
+            //  Validar archivo
             if (archivo == null || archivo.Length == 0)
                 return BadRequest("Archivo inválido");
 
-            // ✅ Validar ID publicación
+            //  Validar ID publicación
             if (string.IsNullOrEmpty(Id_Publicacion))
                 return BadRequest("Id_Publicacion requerido");
 
-            // ✅ Validar extensión
+            //  Validar extensión
             var extension = Path.GetExtension(archivo.FileName).ToLower();
 
             var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".mp4", ".webm", ".ogg" };
@@ -42,35 +42,35 @@ namespace ProfessionalsSiancaValley.Api.Controllers
             if (!allowedExtensions.Contains(extension))
                 return BadRequest("Tipo de archivo no permitido");
 
-            // ✅ Validar tamaño (máx 10MB)
+            //  Validar tamaño (máx 10MB)
             var maxSize = 10 * 1024 * 1024;
             if (archivo.Length > maxSize)
                 return BadRequest("El archivo supera el tamaño permitido (10MB)");
 
-            // ✅ Validar que exista la publicación
+            //  Validar que exista la publicación
             var exists = await _context.Publications
                 .AnyAsync(p => p.Id_Publicacion == Id_Publicacion);
 
             if (!exists)
                 return NotFound("La publicación no existe");
 
-            // 📁 Carpeta uploads
+            //  Carpeta uploads
             var uploadsPath = Path.Combine(_env.WebRootPath, "uploads");
 
             if (!Directory.Exists(uploadsPath))
                 Directory.CreateDirectory(uploadsPath);
 
-            // 🔥 Nombre único
+            //  Nombre único
             var fileName = $"{Guid.NewGuid()}{extension}";
             var filePath = Path.Combine(uploadsPath, fileName);
 
-            // 💾 Guardar archivo
+            //  Guardar archivo
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await archivo.CopyToAsync(stream);
             }
 
-            // 🧠 Tipo contenido
+            //  Tipo contenido
             string tipoContenido = extension switch
             {
                 ".jpg" or ".jpeg" or ".png" => "image",
@@ -78,17 +78,17 @@ namespace ProfessionalsSiancaValley.Api.Controllers
                 _ => "unknown"
             };
 
-            // 🌐 Base URL (para frontend)
+            //  Base URL (para frontend)
             var baseUrl = $"{Request.Scheme}://{Request.Host}";
 
             var urlArchivo = $"{baseUrl}/uploads/{fileName}";
 
-            // 🧠 Miniatura
+            //  Miniatura
             string urlMiniatura = tipoContenido == "image"
                 ? urlArchivo
                 : $"{baseUrl}/uploads/video-default.png";
 
-            // 💾 Guardar en DB
+            //  Guardar en DB
             var media = new MediaFile
             {
                 Id_Publicacion = Id_Publicacion,
@@ -102,7 +102,7 @@ namespace ProfessionalsSiancaValley.Api.Controllers
             _context.MediaFiles.Add(media);
             await _context.SaveChangesAsync();
 
-            // ✅ Respuesta limpia
+            //  Respuesta limpia
             return Ok(new
             {
                 message = "Archivo subido correctamente",
