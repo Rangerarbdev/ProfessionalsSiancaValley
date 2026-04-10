@@ -21,6 +21,7 @@ namespace ProfessionalsSiancaValley.Api.Controllers
 
         [Authorize]
         [HttpPost]
+        [Consumes("multipart/form-data")]
         public async Task<IActionResult> Upload(
             [FromForm] string Id_Publicacion,
             [FromForm] IFormFile archivo)
